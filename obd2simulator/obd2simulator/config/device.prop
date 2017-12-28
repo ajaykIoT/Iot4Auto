@@ -1,0 +1,21 @@
+## Mandatory fields
+##Organization-ID=155l38
+##Device-Type=vehicle
+##Device-ID=vehicle-sample
+##Authentication-Method=token
+##Authentication-Token=ytl12345
+
+Organization-ID=4kw667
+Device-Type=vehicles
+Device-ID=obd2-dev1
+Authentication-Method=token
+Authentication-Token=psl12345
+
+##Organization-ID=4kw667
+##Device-Type=MQTTDevice
+##Device-ID=TestDevice0202
+##Authentication-Method=token
+##Authentication-Token=TestDevice0202
+
+## Optional fields
+Clean-Session = true

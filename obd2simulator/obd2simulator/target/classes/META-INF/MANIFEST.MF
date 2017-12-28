@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: ibmiot4auto-application-samples
+Implementation-Version: 0.0.1
+Implementation-Vendor-Id: com.ibm.iot.auto.bluemix
+Build-Jdk: 1.7.0_51
+Built-By: nitin_shrivastava
+Created-By: Maven Integration for Eclipse
+Specification-Title: ibmiot4auto-application-samples
+Implementation-URL: https://github.com/IBM-Bluemix/car-data-management
+Specification-Version: 0.0.1
+

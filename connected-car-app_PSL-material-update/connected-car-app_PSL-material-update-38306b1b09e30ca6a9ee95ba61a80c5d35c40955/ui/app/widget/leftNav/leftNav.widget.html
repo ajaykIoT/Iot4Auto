@@ -1,0 +1,13 @@
+<nav class="navbar-fixed-left left-nav-container" ng-controller="LeftNavController">
+	<div ng-repeat="nav in leftNavContent" class="col-xs-12 nav-menu" ui-sref="{{nav.state}}" ng-class="{'active-nav-menu':currState.indexOf(nav.state) > -1}">
+		<i class="material-icons" style="position:relative;top:6px;">{{nav.iconName}}</i>&nbsp;&nbsp;
+		<span ng-bind="nav.name"></span>
+		<div class="ripple-container"></div>
+		<!-- <span ng-if="nav.count" class="badge notification_badge">{{nav.count}}</span> -->
+	</div>
+</nav>
+
+<div class="cca-2017" style="color:#9E9E9E">
+	<p class="text-center" style="margin:unset;"> &copy 2017 Persistent Systems Ltd. </p>
+	<p class="text-center" style="margin:unset;">All Rights Reserved.</p>
+</div>

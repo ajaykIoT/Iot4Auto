@@ -1,0 +1,33 @@
+{
+  "name": "Connected_Cars",
+  "version": "0.0.2",
+  "private": true,
+  "dependencies": {
+    "bower": "1.8.x",
+    "cfenv": "1.0.x",
+    "cloudant": "^1.7.1",
+    "express": "4.13.x",
+    "q": "^1.4.1",
+    "requirejs": "^2.3.3",
+    "restify": "^4.x",
+    "vcap_services": "^0.2.0",
+    "when": "~3.*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.ng.bluemix.net/utkarsh_patil1/connected-car-app_PSL.git"
+  },
+  "engines": {
+    "node": "4.x"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "node app.js"
+  },
+  "devDependencies": {
+    "add-stream": "^1.0.0",
+    "del": "^2.2.2",
+    "file-exists": "^3.0.2",
+    "main-bower-files": "^2.13.1"
+  }
+}

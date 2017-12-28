@@ -1,0 +1,46 @@
+<article class="container" name="loginForm" class="col-md-3 col-md-offset-5  col-xs-12 loginContainer">
+	<article class="card card-container">
+		<img id="profile-img" class="profile-img-card" src="../../app/assets/images/login/psl_logo_web.png" />
+		
+		<form   name="loginForm" ng-submit="doLogin()" autocomplete="off">
+		
+		
+		<article class="col-md-12 col-xs-12 no-padding">
+			<article class="form-group inline-display field_border">
+				<img  class="col-md-2 col-xs-2 icon_user" src="../../app/assets/images/login/icon_user.png">
+				<input class="col-md-10 col-xs-10 input_text" type="text"  ng-model="login.userName"  placeholder="Username" required>
+			</article>
+			<article class="form-group inline-display field_border">
+				<img class="col-md-2 col-xs-2 icon_user" src="../../app/assets/images/login/icon_lock.png">
+				<input class="col-md-10 col-xs-10 input_text"  type="password"  ng-model="login.password"  placeholder="Password" required/>
+				</article>
+				
+		</article>
+
+
+	
+		<article class="col-md-12 col-xs-12 checkbox no-padding">
+			
+		<label>
+            <input type="checkbox"  value="remember-me"> <span class="checkboxlabel" >Remember me</span>
+         </label>
+		 <label>
+            <input type="checkbox" ng-model="termCheckbox" value="terms-conditon "><a target="_blank" href="../../app/assets/doc/License_Agreement.pdf" class="checkboxlabel terms">I have read & accept these term and conditions.</a>
+         </label>
+		</article class="col-md-12 col-xs-12" >
+			<button ng-disabled="!termCheckbox" class="btn btn-lg btn-primary btn-block btn-signin loginbtn" type="submit">LOGIN</button>
+		</form>
+		<label class="register" ng-click="doRegister()"><a>Register for new account</a> </label>
+
+	</article>
+	<!--<article class="col-md-3 col-md-offset-5 col-xs-6 col-xs-offset-3 col-sm-3 col-sm-offset-5 ipad-offset persistent-logo-pos">
+		<img id="profile-img" class="persistent-img-card" src="../../app/assets/images/login/psl_logo_mobile.png" />
+	</article>-->
+</article>
+<section class="cca-2017">
+	<article class="col-md-12 cca-2017-footer ">
+		<h5 class="text-center cca-2017-text">  &copy 2017 Persistent Systems. All Rights Reserved. This software is confidential and proprietary information of Persistent.</h5>
+		
+	</article>
+</section>
+

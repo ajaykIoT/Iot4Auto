@@ -1,0 +1,169 @@
+<div class="col-xs-12" style="padding-left:30px;">
+  <h2 style="font-weight:400;">Live Tracking</h2>
+  <h4>Helps you track ongoing trip as well as statistics from past trips.</h4>
+</div>
+
+<div class="col-xs-12">
+  <div class="col-xs-12 col-md-3 patchbox" ng-repeat="patch in patchBoxContent">
+    <div class="panel panel-default">
+      <div class="panel-body" style="padding:unset;">
+        <div class="col-xs-4 patchbox-icon">
+            <i class="material-icons ico">{{patch.icon}}</i>
+        </div>
+        <div class="col-xs-8 patchbox-content">
+          <div class="col-xs-12 patch-detail-container">
+		        <p class="patch-heading">{{patch.title}}</p>
+		        <div class="col-xs-12 patch-value">
+		          <p class="patch-count">{{patch.value | number : 0}}</p>
+		          <p class="patch-unit">{{patch.unit}}</p>
+		        </div>
+	        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 no-trip" ng-show="!isTrip && !isLoading">
+  <div class="no-trip-inside">
+    <p class="no-trip-alert">There are no ongoing trips to track, please click the button below to create one.</p>
+    <a href="javascript:void(0)" class="btn btn-raised btn-primary" ng-click="isLoading=true">Create Trip</a>
+  </div>
+</div>
+
+<div class="col-xs-12 conf-trip fade-in" ng-show="!isTrip && isLoading">
+  <h3>Create Trip</h3>
+  <h4>Add source and destination below to start the trip.</h4>
+  <div class="row">
+  <div class="col-xs-1">
+
+  </div>
+  <div class="col-xs-10 conf-trip-inside">
+  <form name="starter" >
+    <div class="form-group form-group-lg label-floating is-empty">
+      <label for="source" class="control-label"><i class="material-icons">location_on</i>&nbsp;&nbsp;Source</label>
+      <input name="source" id="origin-input" class="form-control" type="text" style="text-overflow: ellipsis;" placeholder="" ng-model="source" required/>
+      <span class="help-block">Start typing for suggestions and then select from the list.</span>
+    </div>
+    <div class="form-group form-group-lg label-floating is-empty">
+      <label for="dest" class="control-label"><i class="material-icons">location_city</i>&nbsp;&nbsp;Destination</label>
+      <input name="dest" id="destination-input" class="form-control" type="text" style="text-overflow: ellipsis;" placeholder="" ng-model="dest" required/>
+      <span class="help-block">Start typing for suggestions and then select from the list.</span>
+    </div>
+    <div style="text-align:right;">
+        <a href="javascript:void(0)" class="btn btn-deafult btn-lg" ng-click="canTrip()">Cancel</a>
+        <fieldset  ng-disabled="starter.source.$error.required || starter.dest.$error.required" style="display:inline;">
+          <a href="javascript:void(0)" class="btn btn-primary btn-lg" ng-click="stTrip()">Start Trip</a>
+        </fieldset>
+    </div>
+    </form>
+  </div>
+  <div class="col-xs-1"></div>
+</div>
+</div>
+
+<div class="col-xs-12 live-trip" ng-show="isTrip && !isLoading">
+  <div class="row">
+<div class="col-xs-12 col-md-8 live-map">
+  <div class="col-md-12 nopadding mapBoxContainer" ng-include="'app/widget/map/map.widget.html'"
+                ng-controller="MapController"></div>
+</div>
+
+<div class="col-xs-12 col-md-4 live-stats">
+  <div class="col-xs-5 stats">
+    <div class="inside panel">
+      <div class="panel-heading">
+        <h5>Distance</h5>
+      </div>
+      <div style=" margin-top: 30px;font-size: large;">
+        {{realTimeData.distance | number: 2}} kms
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-7 stats">
+    <div class="inside panel">
+      <div id="container-speed" style="width: 100%; height: 100%; float: left;"></div>
+    </div>
+  </div>
+    <div class="col-xs-6 stats">
+      <div class="inside panel">
+        <div class="panel-heading">
+          <h5>Speed</h5>
+        </div>
+        <div style=" margin-top: 30px;font-size: large;">
+        {{realTimeData.currentSpeed}} kms/hr
+        </div>
+
+
+      </div>
+    </div>
+    <div class="col-xs-6 stats">
+      <div class="inside panel">
+
+      </div>
+    </div>
+
+    <div class="col-xs-12 stats">
+      <div class="inside panel">
+
+      </div>
+    </div>
+</div>
+</div>
+<div class="col-xs-12" style="text-align:center;margin-bottom:20px;margin-top:5px;padding-left:unset;padding-right:unset;">
+    <a href="javascript:void(0)" class="btn btn-primary btn-raised btn-lg" style="font-size: 20px;width: 100%;height: 50px;padding-left: unset;padding-right: unset;" ng-click="endTrip()">
+      Stop Trip</a>
+</div>
+</div>
+
+
+
+<!-- <div class="col-md-12 widget-container nopadding">
+
+    <article class="col-md-12 dashboard-heading">
+        <div class="col-md-9 no-padding" >
+            <span class="heading-title">Live Tracking</span>
+        </div>
+
+    </article>
+
+    <article class="col-md-12 nopadding patchBox-container">
+        <article class="col-md-3" ng-repeat="patchBox in patchBoxContent" ng-include="'app/widget/patchBox/patchBox.widget.html'"
+            ng-controller="patchBoxController">
+        </article>
+    </article>
+        <article class="col-md-12 col-sm-12 col-xs-12 map_bar_section">
+    <div class="col-md-3 col-sm-12 col-xs-12  barChartContainer pull-right">
+
+        <div class="col-md-12 col-sm-12 col-xs-12 vehicle-live-info no-padding">
+               <div ng-include="'app/widget/driverDetail/driverDetail.widget.html'" ng-controller="DriverDetailController"></div>
+        </div>
+
+    </div>
+        <div class="col-md-9  col-sm-12 col-xs-12 mapcontainer">
+            <div class="col-md-12 nopadding mapBoxContainer" ng-include="'app/widget/map/map.widget.html'"
+                ng-controller="MapController"></div>
+        </div>
+
+
+</article>
+
+    <div class="col-md-12 col-xs-12 mapbtn-container" >
+        <div class="map-button">
+            <span class="col-xs-12 col-sm-12 ">
+                <article align="center" class=" map-trip-btn" ng-click="startTrip()" ng-class="{'hideElement': !allowTripStart}">Start Trip</article>
+                <article align="center" class=" map-trip-btn" ng-click="endTrip()" ng-class="{'hideElement': allowTripStart}">End Trip</article>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-12 hidden-xs hidden-sm" >
+    	<div class="col-md-9 nopaddingLeft">
+	        <div class="startEndBtn">
+	        	<article align="center" class=" map-trip-btn" ng-click="startTrip()" ng-class="{'hideElement': !allowTripStart}">Start Trip</article>
+	            <article align="center" class=" map-trip-btn" ng-click="endTrip()" ng-class="{'hideElement': allowTripStart}">End Trip</article>
+	        </div>
+        </div>
+    </div>
+
+</div> -->

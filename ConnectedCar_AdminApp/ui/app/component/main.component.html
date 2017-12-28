@@ -1,0 +1,119 @@
+<section ng-class="{'background_help':test}" ng-controller="MainController">
+	<section class=" nopadding help-box" >
+		<article ng-if="helpLoader_1">
+
+			<section class="direction-loader col-sm-12 col-xs-12  ">
+				 <img class="close_postion" ng-click="closeHelp()" src=".../../app/assets/images/help/icon_delete.png" />
+			</section>
+			<section class="info-heading col-sm-12 col-xs-12   ">
+				<article class="col-sm-12 col-xs-12 info-heading-text heading-container">{{heading}}</article>
+			</section>
+
+			<section class="info-start-loader col-sm-12 col-xs-12 information-container ">
+				<article class="col-sm-12 col-xs-12 info-text">{{information}}<br>{{information2}}</article>
+			</section>
+			<section class="ajax-loader col-sm-12 col-xs-12 ">
+				<button class="col-sm-12 col-xs-12 btn btn-lg btn-block nextbtncolor" ng-click="startHelp()">START</button>
+			</section>
+		</article>
+		<article ng-if="helpLoader_2">
+
+			<section class="direction-loader col-sm-12 col-xs-12  ">
+				<img class="img_postion_1" src=".../../app/assets/images/help/arrow_help.png" />
+				<img class="search-help-img "  src="../../app/assets/images/topBar/icon_search.png" />
+			</section>
+
+			<section class="info-heading col-sm-12 col-xs-12   ">
+				<article class="col-sm-12 col-xs-12 info-heading-text heading-container">{{heading}}</article>
+			</section>
+
+			<section class="info-loader col-sm-12 col-xs-12 information-container ">
+				<article class="col-sm-12 col-xs-12 info-text">{{information}}</article>
+			</section>
+			<section class="ajax-loader col-sm-12 col-xs-12 helpbtn ">
+				<button class="col-sm-6 col-xs-6 btn btn-lg btn-block helpbtn_size helpcancelbtncolor" ng-click="closeHelp()">CANCEL</button>
+				<button class="col-sm-6 col-xs-6 btn btn-lg btn-block helpbtn_size nextbtncolor" ng-click="goNext()">NEXT</button>
+			</section>
+		</article>
+		<article ng-if="helpLoader_3">
+
+			<section class="direction-loader col-sm-12 col-xs-12  ">
+				<img class="img_postion_2" src=".../../app/assets/images/help/arrow_help.png" />
+				<img class="profilePic profile-help-img"  src="../../app/assets/images/topBar/icon_user.png" />
+			</section>
+
+			<section class="info-heading col-sm-12 col-xs-12   ">
+				<article class="col-sm-12 col-xs-12 info-heading-text heading-container">{{heading}}</article>
+			</section>
+
+			<section class="info-loader col-sm-12 col-xs-12 information-container ">
+				<article class="col-sm-12 col-xs-12 info-text">{{information}}</article>
+			</section>
+			<section class="ajax-loader col-sm-12 col-xs-12 helpbtn ">
+				<button class="col-sm-6 col-xs-6 btn btn-lg btn-block helpbtn_size helpcancelbtncolor" ng-click="closeHelp()">CANCEL</button>
+				<button class="col-sm-6 col-xs-6 btn btn-lg btn-block helpbtn_size nextbtncolor" ng-click="goNext()">NEXT</button>
+			</section>
+		</article>
+		<article ng-if="helpLoader_4">
+
+			<section class="direction-loader col-sm-12 col-xs-12  ">
+				<img class="img_postion_3" src=".../../app/assets/images/help/arrow_help.png" />
+				<button  class="navbar-toggle collapsed menu-help-img" 
+						aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar redbg"></span>
+						<span class="icon-bar redbg"></span>
+						<span class="icon-bar redbg"></span>
+          		</button>
+			</section>
+
+			<section class="info-heading col-sm-12 col-xs-12   ">
+				<article class="col-sm-12 col-xs-12 info-heading-text heading-container">{{heading}}</article>
+			</section>
+			
+			<section class="info-loader col-sm-12 col-xs-12 information-container ">
+				<article class="col-sm-12 col-xs-12 info-text">{{information}}</article>
+			</section>
+			<section class="ajax-loader col-sm-12 col-xs-12 helpbtn ">
+				<button class="col-sm-6 col-xs-6 btn btn-lg btn-block helpbtn_size helpcancelbtncolor" ng-click="closeHelp()">CANCEL</button>
+				<button class="col-sm-6 col-xs-6 btn btn-lg btn-block helpbtn_size nextbtncolor" ng-click="goNext()">NEXT</button>
+			</section>
+		</article>
+		<article ng-if="helpLoader_5">
+
+			
+			<section class="close-loader  col-sm-12 col-xs-12 ">
+				<button class="col-sm-12 col-xs-12 btn btn-lg btn-block nextbtncolor" ng-click="closeHelp()">DONE</button>
+			</section>
+
+			<section class="last-info-heading col-sm-12 col-xs-12   ">
+				<article class="col-sm-12 col-xs-12 info-heading-text heading-container">{{heading}}</article>
+			</section>
+			
+			<section class="last-info-loader col-sm-12 col-xs-12 information-container ">
+				<article class="col-sm-12 col-xs-12 info-text">{{information}}</article>
+			</section>
+			
+
+			<section class="last-direction-loader col-sm-12 col-xs-12  ">
+				<img class="img_postion_5" src=".../../app/assets/images/help/arrow_help_down.png" />
+				
+			</section>
+			<section class="start-end-helpbtn col-sm-12 col-xs-12  ">
+				<button class="col-sm-12 col-xs-12 nextbtncolor helpstartbtn" ng-disabled="true">Start Trip</button>
+				
+			</section>
+		</article>
+	</section>
+	<!--helpLoader_4 || helpLoader_3 || helpLoader_2 || helpLoader_1-->
+	<section  ng-class="{ 'helpcontainer' : test}">
+		<header class="col-md-12 navbar-fixed-top nopadding" ng-include="'app/widget/topBar/topBar.widget.html'"></header>
+		<section class="col-md-12 nopadding bodyContainer">
+			<aside class="col-md-1 nopadding leftContainer" ng-include="'app/widget/leftNav/leftNav.widget.html'"></aside>
+			<section class="col-md-11 nopadding sectionContainer" ui-view class="col-md-11 border"></section>
+		</section>
+		<footer class="col-md-12 navbar-fixed-bottom nopadding footer-container" ng-include="'app/widget/bottomBar/bottomBar.widget.html'"
+			style="position: relative">
+		</footer>
+	</section>
+</section>

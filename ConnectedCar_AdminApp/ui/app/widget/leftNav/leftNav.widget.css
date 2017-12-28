@@ -1,0 +1,89 @@
+
+.leftNavContainer {
+	border-radius: 0;
+	height: 100%;
+    background-color: #494748;
+}
+
+.leftNavBGColor {
+	background: #494748;
+}
+
+.leftNavEle {
+    border-bottom: 1px solid #A19B9B;
+}
+
+
+.leftNavEle:hover, .leftNavEle:active {
+    color: red !important;
+}
+
+.leftNavContainer a:hover, .activeLeftTab {
+	background: black;
+    font-weight: bold;
+    color: red !important;
+}
+
+.navbar-nav>li>a {
+	margin-left: 1px;
+	margin-top: -1px;
+	cursor: pointer;
+}
+
+.navbar-nav>li>a:hover, .navbar-nav>li>a:active, .navbar-nav>li>a:visited{
+    
+    background-color: black !important;
+    color: red !important;
+    
+}
+
+
+/*a {
+  color:blue;
+  -o-transition:color .3s ease-out, background 2s ease-in;
+  -ms-transition:color .3s ease-out, background 2s ease-in;
+  -moz-transition:color .3s ease-out, background 2s ease-in;
+  -webkit-transition:color .3s ease-out, background 2s ease-in;
+
+  transition:color .2s ease-out, background 1s ease-in;
+}
+a:hover { color:red; }*/
+.leftTabNavName {
+	color: #A19B9B;
+	font-size:12px;
+   
+}
+
+
+.activeleftTabNavName{
+    color: red ;
+    font-size:12px;
+    
+}
+
+
+.navbar-nav>li>a{
+    
+    padding: 15px 0px 8px 0px;
+}
+.leftNavImages {
+	width: 40px;
+	height: 40px;
+}
+
+.leftNavImages {
+	width: 40px;
+	height: 40px;
+}
+
+.width100Percent {
+	width: 100%;
+}
+
+.notification_badge {
+    margin-left: -49px;
+    margin-top: -100px;
+    background-color: #F7A01D;
+    padding: 6px;
+    border-radius: 50px;
+}

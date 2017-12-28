@@ -1,0 +1,38 @@
+{
+  "name": "connected-car-service",
+  "version": "1.0.0",
+  "description": "Connected Car Service",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "async": "^2.3.0",
+    "bluebird": "",
+    "body-parser": "1.15.0",
+    "cfenv": "1.0.3",
+    "cloudant": "1.5.1",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "1.3.3",
+    "cors": "2.7.1",
+    "debug": "2.2.0",
+    "dotenv": "~2.0.0",
+    "express": "4.9.8",
+    "express-session": "1.7.6",
+    "fs": "0.0.2",
+    "fs-extra": "0.26.5",
+    "ibm_db": "^2.1.0",
+    "ibmiotf": "0.2.12",
+    "moment": "2.8.3",
+    "morgan": "1.6.0",
+    "npm-clean": "^1.0.3",
+    "passport": "0.2.2",
+    "q": "2.0.3",
+    "request": "2.69.0",
+    "underscore": "~1.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibm-watson-iot/iota-starter-server.git"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}

@@ -1,0 +1,93 @@
+<script src="./socket.io/socket.io.js"></script>  
+
+<script>
+var socket = io.connect('/');
+                socket.on('dbData1', function(data2) {
+                    console.log('Notification of DB:', data2.rows);
+                    });
+                
+</script>
+
+
+
+
+<section class="col-md-12 widget-container nopadding">
+
+    <article class="col-md-12 dashboard-heading">
+        <section class="col-md-9 no-padding" >
+            <span class="heading-title">Live Tracking</span>
+        </section>
+
+    </article>
+
+    <article class="col-md-12 nopadding patchBox-container">
+        <article class="col-md-3" ng-repeat="patchBox in patchBoxContent" ng-include="'app/widget/patchBox/patchBox.widget.html'"
+            ng-controller="patchBoxController">
+        </article>
+    </article>
+    <!--<article class="col-md-12 ">
+        <article class="col-md-12 live-selectcontainer">
+        <article class="col-md-2">
+            <select class="live-select-style">
+                    <option value="User" selected>User</option>
+                    
+            </select>
+        </article>
+         
+        <article class="col-md-2">
+            <select class="live-select-style">
+                    <option value="Secs" selected>Secs</option>
+            </select>
+        </article>
+
+        <article class="col-md-2">
+            <select class="live-select-style">
+                    <option value="30">30</option>
+                    
+            </select>
+        </article>
+         
+        <article class="col-md-2">
+            <button class="live-btn-style">Apply Filter</button>
+        </article>
+        </article>
+
+        
+    </article>-->
+
+    
+    <article class="col-md-12 col-sm-12 col-xs-12 map_bar_section">
+    <section class="col-md-3 col-sm-12 col-xs-12  barChartContainer pull-right">
+
+        <section class="col-md-12 col-sm-12 col-xs-12 vehicle-live-info no-padding">
+               <section ng-include="'app/widget/driverDetail/driverDetail.widget.html'" ng-controller="DriverDetailController"></section> 
+        </section>
+       
+    </section>
+        <section class="col-md-9  col-sm-12 col-xs-12 mapcontainer">
+            <section class="col-md-12 nopadding mapBoxContainer" ng-include="'app/widget/map/map.widget.html'"
+                ng-controller="MapController"></section>
+        </section>
+    
+
+</article>
+
+    <section class="col-md-12 col-xs-12 mapbtn-container" >
+        <section class="map-button">
+            <span class="col-xs-12 col-sm-12 ">
+                <article align="center" class=" map-trip-btn" ng-click="startTrip()" ng-class="{'hideElement': !allowTripStart}">Start Trip</article>
+                <article align="center" class=" map-trip-btn" ng-click="endTrip()" ng-class="{'hideElement': allowTripStart}">End Trip</article>
+            </span>               
+        </section>
+    </section>
+    
+    <section class="col-md-12 hidden-xs hidden-sm" >
+    	<section class="col-md-9 nopaddingLeft">
+	        <section class="startEndBtn">
+	        	<article align="center" class=" map-trip-btn" ng-click="startTrip()" ng-class="{'hideElement': !allowTripStart}">Start Trip</article>
+	            <article align="center" class=" map-trip-btn" ng-click="endTrip()" ng-class="{'hideElement': allowTripStart}">End Trip</article>
+	        </section>
+        </section>
+    </section> 
+
+</section>

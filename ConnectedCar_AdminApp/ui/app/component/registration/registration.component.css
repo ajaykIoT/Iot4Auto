@@ -1,0 +1,209 @@
+body {
+	background: #f2f2f2;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+        overflow-x: hidden;
+		overflow-y: hidden;
+}
+
+regbackground{
+	background: #f2f2f2;
+	top: 60px;
+    position: absolute;
+}
+
+.regContainer {
+	background-color: white;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 0px;
+	left: 30%;
+	min-height: 80%;
+    margin-top: 1%;
+	position: relative;
+	top:50px;
+	
+}
+
+.no-padding{
+    padding-left: 0px;
+    padding-right :0px;
+}   
+
+.Details-container{
+    margin-bottom: 20px;
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-top: 10px;
+}
+.heading-title{
+	font-weight: 600;
+    font-size:25px;
+	position: relative;
+	top:50px;
+}
+
+.reg-form-title{
+    font-weight: normal;
+    font-size:18px;
+}
+
+.heading-topic{
+	font-weight: normal;
+	color: #9E9E9E;
+    font-size:17px;
+}
+
+.reg-heading{
+	left: 30%;
+    padding-top: 1%;
+}
+
+.field-container{
+    margin-top: 2%;
+}
+
+.input-field{
+    border: none;
+    border-bottom: 1px solid #9E9E9E;
+	color: #9E9E9E;
+	outline: none;
+}
+
+.disableBtn{
+	opacity: 0.7;
+}
+
+.submitbtncolor {
+	background-color: #F13D3E;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+
+.cancelbtncolor {
+	margin-right: 30px;
+	background-color:#C1B5B5;
+	font-size: 16px;
+	font-weight: bold;
+    color: white;
+}
+
+.button-container{
+    border: none;
+	margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.cancelbtncolor:hover ,.submitbtncolor:hover{
+		color: white !important;
+}
+
+
+.Regbtn {
+	position: relative;
+    /* float: none; */
+    left: 20%;
+    margin-right: 9%;
+}
+
+.Regbtn_size {
+	height: 40px;
+	width: 140px;
+	border-radius: 3px !important;
+    margin-top: 0px !important;
+}
+
+
+
+.cca-2017{
+	position: absolute;
+	bottom: 0px;
+	width:100%;
+	right: 0px;
+
+}
+
+.cca-2017-footer {
+	background: white;
+	height: 45px;
+	position: fixed;
+	bottom: 0;	
+	width: 100%;
+	padding-top: 5px;
+}
+
+.cca-2017-text{
+	color: black;
+    font-size: 12px;
+}
+
+.errormsg{
+	color: red;
+}
+
+@media only screen and (max-device-width: 768px) {
+
+	.regContainer {
+		left: 1%; 
+		/*min-height: 80%;*/
+		margin-top: 5px; 
+	}
+
+	.form-container{
+		position: absolute;
+		top: 20px;
+		margin-left: 10px;
+		margin-right: 10px;
+		width: 100%;
+	}
+
+	.Details-container {
+		margin-bottom: 5px;
+		padding-left: 20px;
+		padding-right: 40px;
+		margin-top: 10px;
+	}
+	.input-field {
+       width: 100%;
+	}
+	.field-container {
+    	margin-top: 10px;
+	}
+	.Regbtn {
+		position: relative;
+		left: 0%;
+		margin-right: 0%;
+		display: inline-flex;
+		padding-left: 0px;
+	}
+	.button-container{
+		margin-top: 5%;
+		margin-bottom: 5%;
+	}
+	.field-container{
+    	margin-top: 7%;
+	}	
+	.cancelbtncolor {
+		height: 40px !important;
+	}
+	
+	.cca-2017-text{
+		font-size: 10px;
+    	margin: 0px;
+	}
+
+}
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+   
+	.Regbtn {
+		left: 5%;
+	}
+
+
+}

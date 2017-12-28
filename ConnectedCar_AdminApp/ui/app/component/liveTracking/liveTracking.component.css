@@ -1,0 +1,281 @@
+.statisticsContainer {
+	height: 100%;
+}
+
+.hideElement {
+	display: none;
+}
+
+.border{
+	border: 1px solid red;
+}
+
+.mapMainContainer {
+	height: calc(100% - 120px);
+	
+}
+
+.mapDistributionMainContainer {
+	height: 100%;
+	padding-left: 0;
+}
+
+.blueProgress {
+	background-color: #5F8EC6; 
+}
+
+.redProgress {
+	background-color: #DB5A23;
+}
+
+
+
+.greenProgress {
+	background-color: #64BC65;
+}
+
+.dashboard-heading{
+	padding-top: 5px;
+    padding-bottom: 5px;
+        position: relative;
+    bottom: 50px;
+
+    }
+
+.widget-container{
+	height: 100%;
+}
+
+.map_bar_section{
+	margin-top: 15px;
+    height: calc(100% - 180px);
+}
+
+.tableContainer{
+	height: calc(100% - 416px);
+	margin-top: 15px;
+	padding-left: 0px;
+
+}
+
+.table-heading{
+	padding-top: 2px;
+    padding-bottom: 2px;
+}
+.startEndBtn:hover {
+        background-color:#3e8e41;
+        padding-left:15px;
+
+} 
+.barChartContainer{
+   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+	padding-left: 0px;
+    padding-right: 0px;
+}
+
+.table-scroll {
+  height: 100%;
+  overflow:auto;  
+  padding: 0px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    margin: 10px 17px;
+    width: 64.466667%;
+}
+
+.heading-title{
+	color: #5F8EC6;
+	font-weight: normal;
+    font-size:17px;
+}
+
+.heading-topic{
+	font-weight: normal;
+	color: #9E9E9E;
+ font-size:17px;
+}
+
+.select-style{
+	padding: 5px;
+	margin-right: 20px !important;
+	color: #9e9e9e;
+}
+
+.mapcontainer{
+	padding-left: 0;
+    height: 100%;
+}
+
+.mapBoxContainer{
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+	
+}
+
+.table-heading{
+	border :0px solid #adadad;
+}
+.piechart-div{
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+    margin: 10px 0px 0px 0px;
+   }
+.barchart-heading-new{
+    border: 1px solid #ebebeb;
+    padding: 8px 0 8px 15px !important;
+    font-size: 15px;
+    margin-bottom: 0px;
+    background-color: white;
+}
+.barchart-heading{
+	border-bottom :1px solid #ebebeb;
+	padding-left: 0px;
+    padding-right: 0px;
+	padding-top: 5px;
+
+}
+
+.maximise_barchart{
+	width: 12%;
+}
+
+.barChartContainer .track-select-style {
+	padding: 5px;
+    color: #9e9e9e;
+    font-size: 12px;
+    border: 1px solid #d7d7d7;
+}
+
+.no-padding{
+    padding-left: 0px;
+    padding-right :0px;
+
+}   
+
+.live-selectcontainer{
+    margin-top: 10px;
+    height: 50px;
+    background-color: #E8E8E8;
+}
+
+.live-select-style{
+    background-color: #E8E8E8;
+    border: none;
+    border-bottom: 1px solid;
+    width: 100%;
+    padding-top: 0px;
+    margin-top: 10px;
+}
+
+.live-btn-style{
+    margin-top: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    margin-top: 5px;
+    background-color: red;
+    color: white;
+}
+
+.patchBox-container{
+    display: block;
+}
+
+.vehicle-live-info{
+    width: 100%;
+    height: 570px;
+    background-color: white;
+}
+
+.mapbtn-container{
+  display: block;
+}
+
+.map-button{
+    display: none;
+}
+
+.startEndBtn{
+        padding-top: 6px;
+        background-color: #F13D3E;
+        z-index: 999;
+	    height: 50px;
+        bottom: 0;
+        padding-left: 0;
+        position: relative;
+}
+    
+.nopaddingLeft{
+	padding-left: 0;
+}
+
+.map-trip-btn{
+        font-size: 20px;
+        font-weight: normal;
+        padding-left: 5px;
+        color: white;
+}
+
+@media only screen and (max-device-width: 768px) {
+   .dashboard-heading{
+        display: none;
+    }
+
+    .patchBox-container{
+        display: none;
+    }
+    
+    .live-selectcontainer{
+        display: none;
+    }
+    .barChartContainer{
+        /*display: none;*/
+    }
+
+    .map_bar_section{
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-top: 0px;
+        height: calc(100% - 150px);
+    }
+
+    .mapcontainer{
+        padding-right: 0px;
+    }
+
+    .mapbtn-container{
+        background-color: #F13D3E;
+        z-index: 999;
+	    height: 50px;
+        bottom: 0;
+        position: fixed;
+    }
+
+    .map-button{
+        display: block;
+        left:0%;
+        width: 100%;
+        padding-top: 10px;
+    }
+
+    .map-trip-btn{
+        font-size: 20px;
+        font-weight: normal;
+        padding-left: 5px;
+        color: white;
+    }
+
+    .vehicle-live-info {
+        height: inherit;
+        background-color: lightgray;
+   }
+}

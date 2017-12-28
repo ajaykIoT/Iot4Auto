@@ -1,0 +1,102 @@
+.driverDetail-widget{
+  height: 100%;
+  
+}
+
+.driverDetail-heading{
+    height: 30px;
+}
+
+.driverDetails{
+  height: 100%
+}
+
+.no-padding{
+    padding-left: 0px;
+    padding-right :0px;
+
+}   
+
+.speed-title{
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+.heading-label{
+    font-size: 13px;
+    padding-top: 5px;
+}
+
+.detail-label{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.each-detail{
+    margin-top: 10px;
+}
+
+.realdata-heading{
+    border: 1px solid #ebebeb;
+    padding: 3px 0 3px 10px;
+    font-size: 24px;
+}
+
+
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  /* For portrait layouts only */
+ 
+    .realdata-heading {
+       
+        font-size: 20px;
+    }
+
+    .speed-title {
+        padding-top: 5px;
+        font-size: 18px;
+    }
+
+   .detail-cont {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    }
+
+}
+
+
+@media only screen and (max-device-width: 768px) {
+    .realdata-heading {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .speed-title {
+        padding-top: 0px;
+        font-size: 15px;
+    }
+    .detail-cont{
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    .each-detail {
+        margin-top: 5px;
+    }
+    .heading-label {
+        font-size: smaller;
+        padding-top: 0px;
+        padding-right: 3px;
+        padding-left: 5px;
+    }
+    .detail-label {
+        font-size: small;
+        font-weight: bold;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    .driverDetails {
+        padding-right: 0px;
+        padding-bottom: 5px;
+    }
+
+}

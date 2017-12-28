@@ -1,0 +1,205 @@
+.patchBoxContainer {
+	background-color: #009688;
+}
+
+.nopadding{
+	padding: 0px;
+}
+.green, .blue, .purple, .grey, .yellow {
+	/*padding: 10px;*/
+}
+
+.green {
+	background-color: #3EC9AA;
+    height: 80px;
+}
+
+.blue {
+	background-color: #3CBDE4;
+    height: 80px;
+    
+}
+
+.purple {
+	background-color: #7471E4;
+    height: 80px;
+}
+
+.yellow {
+	background-color: #ECB615;
+    height: 80px;
+}
+
+.viewMoreImage {
+	width: 50px;
+	height: 48px;
+	padding-right: 0;
+}
+
+.viewMoreName {
+	color: #9F9F9F;
+	font-size: 20px;
+	line-height: 23px;
+	padding-top: 10px;
+	width: 124px;
+}
+
+.viewMoreCount {
+	color: #9F9F9F;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 23px;
+	padding-top: 10px;
+}
+
+.viewMoreCoun::before {
+	content: "Read this -";
+}
+
+.globe-icon {
+		padding-top: 15px;
+	    padding-right: 0px;
+   		width: 100%;
+}
+
+.patch-heading {
+	padding: 2px;
+	padding-left: 10px;
+	font-weight: normal;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	font-size: 16px;
+}
+
+
+.text-white{
+	color: white;
+}
+.text-green {
+	color: #29f5e2;
+}
+
+.text-blue {
+	color: #58dff1;
+}
+
+.text-purple {
+	color: #dbd7fb;
+}
+
+.text-grey {
+	color: #c5c1c1;
+}
+
+.patch-count {
+	color: whitesmoke;
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-size: 30px;
+}
+
+.patch-progress {
+	/* border-top: 1px solid white; */
+	padding-left: 10px;
+	z-index: 0;
+}
+
+.progressBarPatch {
+	    height: 2px;
+    background: none;
+    padding: 0px;
+    margin: 0;
+}
+
+.patch-progress-text {
+	padding-top: 10px;
+	font-weight: lighter;
+	margin-bottom: 2px;
+	font-size: 11px;
+	z-index: 1;
+	position: relative;
+}
+
+.whiteProgress {
+	background-color: white;
+}
+
+.patch-ajax-loader {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    display: block; 
+    height: 70px;
+    width: 70px;    
+}
+
+.patchBoxOpacity{
+    opacity: 0.4;
+    z-index:0;
+}
+
+.patchBoxLoaderText{
+	font-size: 14px;
+	color: #007cc5;
+	font-weight: bold;
+	z-index: 1;
+	position: absolute;
+    left: 40%;
+    top: 40%;
+}
+.patch-unit{
+	font-size: 16px;
+    padding-top: 14px;
+	color: whitesmoke;
+	font-weight: bold;
+}
+
+.patch_value{
+	display: inline-flex;
+	padding-left: 10px;
+}
+.patchimgContainer{
+	height: 80px;
+}
+
+.imgbg-green {
+	background-color: #36B598;
+}
+
+.imgbg-blue {
+	background-color: #35AACD;
+}
+
+.imgbg-purple {
+	background-color: #6865CC; 
+}
+
+.imgbg-yellow {
+	background-color: #D3A311;
+}
+
+
+.patch-detail-container{
+	padding-top: 10px;
+    padding-left: 0px;
+    padding-right: 0px
+}
+
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:landscape)  {
+     
+
+  	.patchimgContainer {
+		height: 80px;
+		padding-left: 5px !important;
+		padding-right: 5px !important;
+	}
+
+	.patch-count {
+      font-size: 24px;
+	}
+	.patch-unit {
+       padding-top: 10px;
+  	}
+}

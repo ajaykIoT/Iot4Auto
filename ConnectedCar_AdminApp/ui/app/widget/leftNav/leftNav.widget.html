@@ -1,0 +1,14 @@
+<nav class="navbar navbar-fixed-left leftNavContainer"
+	ng-controller="LeftNavController">
+	<ul class="nav navbar-nav width100Percent leftNavBGColor">
+		<li class="width100Percent">
+			<a ng-repeat="nav in leftNavContent" class="col-md-12 nopadding leftNavEle" ui-sref="{{nav.state}}"
+				ng-class="{'activeLeftTab' : currState.indexOf(nav.state) > -1 }">
+					<!--<img class="center-block leftNavImages" ng-src="../../app/assets/images/leftNav/{{nav.imgName}}.png" /> -->
+					<img ng-if="currState.indexOf(nav.state) <= -1" class="center-block leftNavImages" ng-src="../../app/assets/images/leftNav/{{nav.imgName}}.png" />  
+					<img ng-if="currState.indexOf(nav.state) > -1" class="center-block leftNavImages" ng-src="../../app/assets/images/leftNav/{{nav.activeImgName}}.png" /> 
+					<span ng-if="nav.count" class="badge notification_badge">{{nav.count}}</span>
+					<span class="col-md-12 nopadding text-center leftTabNavName" ng-class="{'activeleftTabNavName' : currState.indexOf(nav.state) > -1 }" ng-bind="nav.name"></span>
+		</a></li>
+	</ul>
+</nav>

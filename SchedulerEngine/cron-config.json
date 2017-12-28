@@ -1,0 +1,21 @@
+{
+	"smsRun" : {
+		"crons" : [
+			{
+				"at" : {
+						"minute" : 33,
+						"hour" : 12
+				}
+			}
+		],
+		"runtype" : "EXACT"
+	},
+	"smsRunNew" : {
+		"crons" : [
+			{
+				"interval" : "0:1"
+			}
+		],
+		"runtype" : "ALWAYS"
+	}
+}

@@ -1,0 +1,8 @@
+applications:
+- path: .
+  memory: 1024M
+  instances: 1
+  domain: mybluemix.net
+  name: connected-car-app
+  host: connected-car-app
+  disk_quota: 2048M

@@ -1,0 +1,94 @@
+<section class="col-md-12 col-xs-12 col-sm-12 nopadding">
+
+
+  <nav class="navbar navbar-default navbar-margin" ng-controller="TopNavController">
+    <section class="container-fluid container-padding">
+      <section class="navbar-header navhead">
+        <button type="button" class="navbar-toggle collapsed nav-togglebtn menu-icon" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar redbg"></span>
+          <span class="icon-bar redbg"></span>
+          <span class="icon-bar redbg"></span>
+          </button>
+          <article class="col-md-8  col-sm-1 col-xs-2 nopadding" class="status-bar-img-margin">
+            <img class="dashboard-logo" src="../../app/assets/images/topBar/psl_logo_web_small.png" />
+          </article>
+          <article class="col-xs-5  col-sm-7 tab-name">
+            <p ng-bind="currPageTitle"></p>
+          </article>
+          <article class="col-md-1 col-xs-1  col-sm-1 search-padding">
+            <img class="search_icon"  src="../../app/assets/images/topBar/icon_search.png" />
+          </article>
+
+          <article class="col-md-1  col-sm-1 alert-padding">
+            <img class="alert_icon " src="../../app/assets/images/topBar/icon_notification.png" />
+            <span class="badge alert_badge ">7</span>
+          </article>
+
+          <article class="col-md-2 col-xs-1  col-sm-1 profile-Padding profile-container">
+
+            <span class="col-md-4 nopadding user-name">
+                  <p style="padding-top:5px;">{{userName}}</p>
+            </span>
+            <span class="col-md-3 col-xs-12  col-sm-12 user-image">
+                  <!--<img class="profilePic" src="../../app/assets/images/topBar/icon_user.png" />-->
+                   <ul  class="nav navbar-nav navbar-right userimg-margin" >
+                <li class="dropdown logoutcontainer">
+                    <a class="dropdown-toggle logout-padding" data-toggle="dropdown">
+                        <span >
+                         <img class="profilePic" ng-class"{profile-help : true}" src="../../app/assets/images/topBar/icon_user.png" />
+                        </span>
+            </a>
+
+            <ul class="dropdown-menu" ng-click="doLogout()">
+              <li class="droplist"><span>Sign Out</span>
+              </li>
+            </ul>
+            </li>
+            </ul>
+            </span>
+            <span class="col-md-1 nopadding user-down-arrow">
+              <ul  class="nav navbar-nav navbar-right" >
+                <li class="dropdown logoutcontainer">
+                    <a class="dropdown-toggle logout-padding" data-toggle="dropdown">
+                        <span class="col-md-1 nopadding user-down-arrow">
+                         <img src="../../app/assets/images/topBar/arrow_down.png" style="padding-top:5px;" />
+                        </span>
+            </a>
+
+            <ul class="dropdown-menu" ng-click="doLogout()">
+              <li class="droplist"><span>Sign Out</span>
+              </li>
+            </ul>
+            </li>
+            </ul>
+            </span>
+
+
+          </article>
+
+
+
+      </section>
+      <section id="navbar" class="navbar-collapse collapse nav-bgcolor">
+
+        <ul ng-repeat="nav in leftNavContent" class="col-xs-12 nav navbar-right menulist" ui-sref="{{nav.state}}">
+          <li>
+
+            <img ng-if="currState.indexOf(nav.state) <= -1" class="menuNavImages pull-left" ng-src="../../app/assets/images/leftNav/{{nav.imgName}}.png"
+            />
+            <img ng-if="currState.indexOf(nav.state) > -1" class="menuNavImages pull-left" ng-src="../../app/assets/images/leftNav/{{nav.activeImgName}}.png"
+            />
+            <span class="menu-list-style" ng-class="{'activeMenuNavName' : currState.indexOf(nav.state) > -1 }" ng-bind="nav.name"></span>
+
+          </li>
+        </ul>
+
+      </section>
+    </section>
+  </nav>
+
+
+
+</section>

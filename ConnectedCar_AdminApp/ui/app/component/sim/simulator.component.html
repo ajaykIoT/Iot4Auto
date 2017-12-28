@@ -1,0 +1,25 @@
+<!--<iframe name="simulator" src="http://reliance-jio-sim.mybluemix.net/"  class="simulator-container" style="width: 100%; height: 100%"></iframe>-->
+
+<section class="input-container" >
+        <div id="floating-panel">
+    <b>Start: </b>
+    <select id="start">
+      <option value="mumbai, il">Mumbai</option>
+    </select>
+    <b>End: </b>
+    <select id="end">
+      <option value="Thane">Thane</option>
+      <option value="Kalyan">Kalyan</option>
+      <option value="NaviMumbai">Navi Mumbai</option>
+      <option value="Vasai">Vasai</option>
+      <option value="MiraBhayandar">Mira Bhayandar</option>
+      <option value="Dadar">Dadar</option>
+    </select> Device ID:<input type="text" name="deviceid" id="deviceid"  ng-model="data.msg" ng-init="data.msg=deviceId">
+    <button type="button" ng-click="startSimulator()">Go</button>
+</div>
+
+</section>
+
+<section id="dvMap" class="sim-map-container"></div>
+</section>
+

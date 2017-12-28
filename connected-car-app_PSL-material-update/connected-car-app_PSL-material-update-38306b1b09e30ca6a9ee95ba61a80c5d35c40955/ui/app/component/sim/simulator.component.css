@@ -1,0 +1,39 @@
+.simulator-container{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+#dvMap{
+    height: 680px !important;
+}
+
+#map {
+        height: 100%;
+}
+      /* Optional: Makes the sample page fill the window. */
+
+#floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 30%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 15px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+}
+
+.input-container{
+    position: relative;
+    top:10px;
+}
+
+.sim-map-container{
+    height: 700px;
+    margin:10px 120px;
+    border: 5px solid black
+}

@@ -1,0 +1,3436 @@
+[
+    {
+        "id": "f2de7ba6.5b8188",
+        "type": "tab",
+        "label": "API"
+    },
+    {
+        "id": "428f289f.46d1b8",
+        "type": "tab",
+        "label": "DB and CM"
+    },
+    {
+        "id": "76cf0de5.045eb4",
+        "type": "tab",
+        "label": "IOTP"
+    },
+    {
+        "id": "84d58618.5e6398",
+        "type": "wiotp",
+        "z": "",
+        "name": "reliance-jio-demo apikey"
+    },
+    {
+        "id": "dd6558d0.599d38",
+        "type": "cloudant",
+        "z": "",
+        "host": "10ccdcf6-200d-4d1a-9914-a4356c9df250-bluemix.cloudant.com",
+        "name": ""
+    },
+    {
+        "id": "cd0a6123.09207",
+        "type": "cloudant",
+        "z": "",
+        "host": "ead72493-d2ef-45bf-acf1-9e183c4a3833-bluemix.cloudant.com",
+        "name": ""
+    },
+    {
+        "id": "a66f1955.4a93c8",
+        "type": "wiotp",
+        "z": "",
+        "name": "jio-apiKey"
+    },
+    {
+        "id": "2c9fa98c.8e9f26",
+        "type": "ibmiot",
+        "z": "",
+        "name": "reliance-jio-demo apikey",
+        "keepalive": "60",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "71d79efd.49818",
+        "type": "ibmiot",
+        "z": "",
+        "name": "jio-apiKey",
+        "keepalive": "60",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "f0c89f97.295db",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Common Config",
+        "func": "msg.mapTenantId = \"e5c5207f-23e0-4839-88c6-0b21be0bbc05\";\nmsg.driverTenantId = \"e2d9064f-f5d4-4fc8-bc75-cfe0c90a5f9c\";\nmsg.mapHostname =\"automotive.internetofthings.ibmcloud.com\";\nmsg.driverHostname = \"automotive.internetofthings.ibmcloud.com\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 585.604118347168,
+        "y": 122.78571319580078,
+        "wires": [
+            [
+                "770ed2bb.78db1c",
+                "4dcf60.16dd90a"
+            ]
+        ]
+    },
+    {
+        "id": "5961cc1c.006da4",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "setArgs2",
+        "func": "if(msg.payload.length > 0 && msg.payload[0] && msg.payload[0].link_id){\n    // MapMatch result becomes list and the first one is nearest link_id\n    msg.link_id = msg.payload[0].link_id;\n    // msg.trip_id\n    msg.matched_heading = msg.payload[0].matched_heading;\n    msg.matched_longitude = msg.payload[0].matched_longitude;\n    msg.matched_latitude = msg.payload[0].matched_latitude;\n    // msg.mo_id\n    \n    msg.payload = null;\n    \n    return [msg, null];\n}else{\n    msg.link_id = '';\n    msg.matched_heading = msg.rawData.heading;\n    msg.matched_longitude = msg.rawData.longitude;\n    msg.matched_latitude = msg.rawData.latitude;\n    return [null, msg];\n}\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 812.479118347168,
+        "y": 234.28570652008057,
+        "wires": [
+            [
+                "264913be.b0dbec",
+                "ab5210de.e4a49"
+            ],
+            [
+                "a5d49366.547b5"
+            ]
+        ]
+    },
+    {
+        "id": "fa838ee3.0bfe8",
+        "type": "ibmiot in",
+        "z": "428f289f.46d1b8",
+        "authentication": "apiKey",
+        "apiKey": "2c9fa98c.8e9f26",
+        "inputType": "evt",
+        "deviceId": "vehicle_bike",
+        "applicationId": "",
+        "deviceType": "OBD2",
+        "eventType": "probe",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": "0",
+        "x": 61.10414123535156,
+        "y": 507.3571729660034,
+        "wires": [
+            [
+                "f4be76df.fbe248",
+                "8d129ea.259586"
+            ]
+        ]
+    },
+    {
+        "id": "53ed669c.691758",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "carProbe",
+        "method": "POST",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/datastore/carProbe?tenant_id={{driverTenantId}}",
+        "tls": "",
+        "x": 823.8541641235352,
+        "y": 292.03572273254395,
+        "wires": [
+            [
+                "e2af2d0.1ee27d"
+            ]
+        ]
+    },
+    {
+        "id": "770ed2bb.78db1c",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "setArgs1",
+        "func": "// '+' must be URL encoded\n//msg.timestamp = encodeURIComponent(msg.payload.timestamp);\nmsg.timestamp = msg.rawData.timestamp;\n//msg.heading = msg.rawData.heading;\nmsg.mo_id = msg.deviceId;\nmsg.trip_id = msg.rawData.trip_id;\nmsg.longitude = msg.rawData.longitude;\nmsg.latitude = msg.rawData.latitude;\nmsg.driver_id = msg.rawData.driver_id;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 751.104133605957,
+        "y": 122.78570175170898,
+        "wires": [
+            [
+                "91e97655.98f248",
+                "e6524938.389208"
+            ]
+        ]
+    },
+    {
+        "id": "e2af2d0.1ee27d",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 967.3541831970215,
+        "y": 313.0357360839844,
+        "wires": []
+    },
+    {
+        "id": "91e97655.98f248",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 920.1041297912598,
+        "y": 92.78569030761719,
+        "wires": []
+    },
+    {
+        "id": "e6524938.389208",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "mapMatching",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{mapHostname}}/mapinsights/mapservice/map/matching?tenant_id={{mapTenantId}}&mo_id={{mo_id}}&trip_id={{trip_id}}&longitude={{longitude}}&latitude={{latitude}}",
+        "tls": "",
+        "x": 623.229118347168,
+        "y": 223.28570652008057,
+        "wires": [
+            [
+                "5961cc1c.006da4",
+                "ebb5a624.c28318"
+            ]
+        ]
+    },
+    {
+        "id": "a5d49366.547b5",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "setArgs3",
+        "func": "var type = null;\nif(msg.payload.links && msg.payload.links[0] && msg.payload.links[0].properties && msg.payload.links[0].properties.type){\n    type = msg.payload.links[0].properties.type;\n}else {\n    type = '5';\n}\n\n\nmsg.payload = {};\n\nmsg.payload.road_type = type;\nmsg.payload.trip_id = msg.trip_id;\nmsg.payload.timestamp = msg.rawData.timestamp;\nmsg.payload.matched_heading = msg.matched_heading;\nmsg.payload.speed = msg.rawData.speed;\nmsg.payload.matched_longitude = msg.matched_longitude;\nmsg.payload.mo_id = msg.deviceId;\nmsg.payload.matched_latitude = msg.matched_latitude;\nmsg.payload.matched_link_id = msg.link_id;\nmsg.payload.driver_id = msg.driver_id;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 622.229133605957,
+        "y": 297.0357446670532,
+        "wires": [
+            [
+                "53ed669c.691758",
+                "2ccf4159.5219ae"
+            ]
+        ]
+    },
+    {
+        "id": "ebb5a624.c28318",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 766.9791412353516,
+        "y": 193.28570747375488,
+        "wires": []
+    },
+    {
+        "id": "264913be.b0dbec",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": " getLinkInformation",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{mapHostname}}/mapinsights/mapservice/link?tenant_id={{mapTenantId}}&link_id={{link_id}}",
+        "tls": "",
+        "x": 1027.729118347168,
+        "y": 231.03570652008057,
+        "wires": [
+            [
+                "a5d49366.547b5"
+            ]
+        ]
+    },
+    {
+        "id": "ab5210de.e4a49",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 908.729118347168,
+        "y": 176.53570652008057,
+        "wires": []
+    },
+    {
+        "id": "2ccf4159.5219ae",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 812.2291412353516,
+        "y": 342.53571605682373,
+        "wires": []
+    },
+    {
+        "id": "f4be76df.fbe248",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 177.78273010253906,
+        "y": 453.0000534057617,
+        "wires": []
+    },
+    {
+        "id": "6b78243f.91b0fc",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Send Car Probe Data",
+        "info": "Gets car probe data from IoT Platform and sends it to Context Mapping and Driver Behavior services.\nSends matched readings of Context Mapping to Websockets.",
+        "x": 498.6041030883789,
+        "y": 64,
+        "wires": []
+    },
+    {
+        "id": "f9369aff.819b68",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Common Config",
+        "func": "msg.mapTenantId = \"e5c5207f-23e0-4839-88c6-0b21be0bbc05\";\nmsg.mapHostname =\"automotive.internetofthings.ibmcloud.com\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 548.4999771118164,
+        "y": 655.5397300720215,
+        "wires": [
+            [
+                "6d2a7a33.c7a3d4"
+            ]
+        ]
+    },
+    {
+        "id": "6d2a7a33.c7a3d4",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "setArgs1",
+        "func": "msg.timestamp = msg.rawData.timestamp;\nmsg.mo_id = msg.deviceId;\nmsg.trip_id = msg.rawData.trip_id;\nmsg.longitude = msg.rawData.longitude;\nmsg.latitude = msg.rawData.latitude;\nmsg.driver_id = msg.rawData.driver_id;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 718.9999580383301,
+        "y": 655.5396499633789,
+        "wires": [
+            [
+                "6cf30e12.0e05b",
+                "d0261b0a.2f64c8"
+            ]
+        ]
+    },
+    {
+        "id": "d0261b0a.2f64c8",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "mapMatching",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{mapHostname}}/mapinsights/mapservice/map/matching?tenant_id={{mapTenantId}}&mo_id={{mo_id}}&trip_id={{trip_id}}&longitude={{longitude}}&latitude={{latitude}}",
+        "tls": "",
+        "x": 901.1249465942383,
+        "y": 651.039737701416,
+        "wires": [
+            [
+                "28a86215.fa0e8e",
+                "2e27ce9a.68c042"
+            ]
+        ]
+    },
+    {
+        "id": "2e27ce9a.68c042",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 977.8749923706055,
+        "y": 700.0398139953613,
+        "wires": []
+    },
+    {
+        "id": "28a86215.fa0e8e",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "setArgs2",
+        "func": "if(msg.payload.length > 0 && msg.payload[0] && msg.payload[0].link_id){\n    msg.matched_longitude = msg.payload[0].matched_longitude;\n    msg.matched_latitude = msg.payload[0].matched_latitude;\n}else{\n    msg.matched_longitude = msg.rawData.longitude;\n    msg.matched_latitude = msg.rawData.latitude;\n}\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 1084.3749694824219,
+        "y": 651.0397663116455,
+        "wires": [
+            [
+                "911a7787.1ef4c8",
+                "84cb8f2e.28bf9"
+            ]
+        ]
+    },
+    {
+        "id": "911a7787.1ef4c8",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1165.6249523162842,
+        "y": 699.289758682251,
+        "wires": []
+    },
+    {
+        "id": "6cf30e12.0e05b",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 822.9999694824219,
+        "y": 702.5396785736084,
+        "wires": []
+    },
+    {
+        "id": "3a486880.ede2e8",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Live Tracking",
+        "info": "",
+        "x": 540.3888626098633,
+        "y": 612.2778930664062,
+        "wires": []
+    },
+    {
+        "id": "53e8dcdb.b561e4",
+        "type": "inject",
+        "z": "428f289f.46d1b8",
+        "name": "Start DB Analysis",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "x": 218.10413360595703,
+        "y": 1113,
+        "wires": [
+            [
+                "ad435246.e30c7"
+            ]
+        ]
+    },
+    {
+        "id": "dd6b4b7e.209108",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "sendJobRequest",
+        "method": "POST",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/jobcontrol/job?tenant_id={{driverTenantId}}",
+        "tls": "",
+        "x": 591.604133605957,
+        "y": 1113,
+        "wires": [
+            [
+                "def561.8e1e3aa",
+                "a835fb5a.cf3d78"
+            ]
+        ]
+    },
+    {
+        "id": "ad435246.e30c7",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set date",
+        "func": "msg.driverHostname = \"automotive.internetofthings.ibmcloud.com\";\nmsg.driverTenantId = \"e2d9064f-f5d4-4fc8-bc75-cfe0c90a5f9c\";\nvar today = new Date().toISOString().slice(0, 10)\nmsg.payload = {\n    from: today,\n    to: today\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 394.60413360595703,
+        "y": 1115,
+        "wires": [
+            [
+                "dd6b4b7e.209108",
+                "d1ed3f72.0cd8c"
+            ]
+        ]
+    },
+    {
+        "id": "def561.8e1e3aa",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 807.104133605957,
+        "y": 1157,
+        "wires": []
+    },
+    {
+        "id": "a835fb5a.cf3d78",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set Job ID",
+        "func": "return {\n    driverHostname: msg.driverHostname,\n    driverTenantId: msg.driverTenantId,\n    job_id: msg.payload.job_id\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 824.1042366027832,
+        "y": 1109.000210762024,
+        "wires": [
+            [
+                "c93916ae.b45638",
+                "73a98bb3.0efb44"
+            ]
+        ]
+    },
+    {
+        "id": "59bf9b22.0edb94",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 391.10413360595703,
+        "y": 1195,
+        "wires": []
+    },
+    {
+        "id": "c93916ae.b45638",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "get Job Status",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/jobcontrol/job?tenant_id={{driverTenantId}}&job_id={{job_id}}",
+        "tls": "",
+        "x": 199.60413360595703,
+        "y": 1201,
+        "wires": [
+            [
+                "59bf9b22.0edb94",
+                "25e21db0.28aca2"
+            ]
+        ]
+    },
+    {
+        "id": "25e21db0.28aca2",
+        "type": "switch",
+        "z": "428f289f.46d1b8",
+        "name": "Check Status",
+        "property": "payload.job_status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "RUNNING",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "SUCCEEDED",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 181.10413360595703,
+        "y": 1309,
+        "wires": [
+            [
+                "f61b33fd.d44bc",
+                "1f9b3382.93db0c"
+            ],
+            [
+                "1f9b3382.93db0c",
+                "9295aa07.078f08"
+            ]
+        ]
+    },
+    {
+        "id": "1f9b3382.93db0c",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload.job_status",
+        "x": 456.10413360595703,
+        "y": 1308,
+        "wires": []
+    },
+    {
+        "id": "f61b33fd.d44bc",
+        "type": "delay",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 522.104133605957,
+        "y": 1244,
+        "wires": [
+            [
+                "a835fb5a.cf3d78"
+            ]
+        ]
+    },
+    {
+        "id": "8585b89f.d02e08",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "get Trip UUID",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/drbresult/tripSummaryList?tenant_id={{driverTenantId}}&job_id={{job_id}}",
+        "tls": "",
+        "x": 386.60413360595703,
+        "y": 1383,
+        "wires": [
+            [
+                "210a21d0.5cecce",
+                "3d1e7dbb.5bc102"
+            ]
+        ]
+    },
+    {
+        "id": "9295aa07.078f08",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set Job ID",
+        "func": "node.warn(msg.job_id);\nreturn {\n    driverHostname: msg.driverHostname,\n    driverTenantId: msg.driverTenantId,\n    job_id: msg.payload.job_id\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 208.60413360595703,
+        "y": 1383,
+        "wires": [
+            [
+                "8585b89f.d02e08"
+            ]
+        ]
+    },
+    {
+        "id": "210a21d0.5cecce",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 575.104133605957,
+        "y": 1383,
+        "wires": []
+    },
+    {
+        "id": "73a98bb3.0efb44",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1010.1041450500488,
+        "y": 1135.00004196167,
+        "wires": []
+    },
+    {
+        "id": "634f6813.a762f8",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "get Trip Details",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/drbresult/trip?tenant_id={{driverTenantId}}&trip_uuid={{trip_uuid}}",
+        "tls": "",
+        "x": 738.6041297912598,
+        "y": 1494.0000953674316,
+        "wires": [
+            [
+                "126bec0b.4a86a4",
+                "923ab22a.b582b"
+            ]
+        ]
+    },
+    {
+        "id": "b766f0e9.cf25d",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 545.104133605957,
+        "y": 1453,
+        "wires": []
+    },
+    {
+        "id": "c5c06f1b.dc4d9",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set Trip UUID",
+        "func": "return {\n    driverHostname: msg.driverHostname,\n    driverTenantId: msg.driverTenantId,\n    trip_uuid: msg.payload.id.trip_uuid\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550.104133605957,
+        "y": 1508,
+        "wires": [
+            [
+                "634f6813.a762f8",
+                "70152c37.fa2cc4"
+            ]
+        ]
+    },
+    {
+        "id": "126bec0b.4a86a4",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 922.1041412353516,
+        "y": 1476.0000305175781,
+        "wires": []
+    },
+    {
+        "id": "70152c37.fa2cc4",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 685.8785018920898,
+        "y": 1566.059045791626,
+        "wires": []
+    },
+    {
+        "id": "3d1e7dbb.5bc102",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Send Each Data",
+        "func": "var data = msg.payload;\nfor (var i = 0; i < data.length; i++) {\n    node.send({\n        payload:data[i],\n        driverHostname: msg.driverHostname,\n        driverTenantId: msg.driverTenantId\n    });\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 302.88539123535156,
+        "y": 1459.5972595214844,
+        "wires": [
+            [
+                "b766f0e9.cf25d",
+                "c5c06f1b.dc4d9",
+                "160dbfa2.32b8e"
+            ]
+        ]
+    },
+    {
+        "id": "160dbfa2.32b8e",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 393.8819274902344,
+        "y": 1558.5069580078125,
+        "wires": []
+    },
+    {
+        "id": "3df2a33a.e4844c",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Driver Behavior Agent",
+        "info": "",
+        "x": 179.60411834716797,
+        "y": 1025.9999771118164,
+        "wires": []
+    },
+    {
+        "id": "923ab22a.b582b",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set date",
+        "func": "var date = new Date(msg.payload.start_time).toISOString().slice(0, 10);\nmsg.payload.date = new Date(date).getTime();\nmsg.driverdetails = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 914.4374923706055,
+        "y": 1577.7500648498535,
+        "wires": [
+            [
+                "ea9d3b09.44f5f8",
+                "2e3faa3.a77e156"
+            ]
+        ]
+    },
+    {
+        "id": "ea9d3b09.44f5f8",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "var today = new Date().toISOString().slice(0, 10)\nmsg.payload = {\n    query: \"trip_id:\\\"\" + msg.driverdetails.trip_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 245.10411834716797,
+        "y": 1762.4169692993164,
+        "wires": [
+            [
+                "1e02e57e.93d9eb",
+                "46508611.c3b808"
+            ]
+        ]
+    },
+    {
+        "id": "46508611.c3b808",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Trip ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByTripID",
+        "x": 454.7708206176758,
+        "y": 1762.7502975463867,
+        "wires": [
+            [
+                "39a35eca.6fddf2",
+                "c7bacda3.7b9a4"
+            ]
+        ]
+    },
+    {
+        "id": "1e02e57e.93d9eb",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 364.61968994140625,
+        "y": 1836.7592067718506,
+        "wires": []
+    },
+    {
+        "id": "39a35eca.6fddf2",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 623.1041145324707,
+        "y": 1749.7502508163452,
+        "wires": []
+    },
+    {
+        "id": "c7bacda3.7b9a4",
+        "type": "switch",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "property": "cloudant.total_rows",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 624.1041145324707,
+        "y": 1806.0836248397827,
+        "wires": [
+            [
+                "25255732.4718b8",
+                "79a497c9.49a5f8"
+            ],
+            [
+                "79a497c9.49a5f8",
+                "be0adb39.f85298"
+            ]
+        ]
+    },
+    {
+        "id": "25255732.4718b8",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set params",
+        "func": "var oldID = msg.payload[0]._id;\nvar oldRev = msg.payload[0]._rev;\nmsg = msg.driverdetails;\nmsg._id = oldID;\nmsg._rev = oldRev;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 820.1041145324707,
+        "y": 1742.0836248397827,
+        "wires": [
+            [
+                "1bdb053e.5e460b",
+                "65d2c428.7257cc"
+            ]
+        ]
+    },
+    {
+        "id": "79a497c9.49a5f8",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 806.1041145324707,
+        "y": 1806.0836248397827,
+        "wires": []
+    },
+    {
+        "id": "be0adb39.f85298",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set params",
+        "func": "msg.payload = msg.driverdetails\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 727.6041145324707,
+        "y": 1887.0836248397827,
+        "wires": [
+            [
+                "8af68bd2.4bec38",
+                "d3f2bfeb.b74ba"
+            ]
+        ]
+    },
+    {
+        "id": "d3f2bfeb.b74ba",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 839.3658218383789,
+        "y": 1942.751516342163,
+        "wires": []
+    },
+    {
+        "id": "8af68bd2.4bec38",
+        "type": "cloudant out",
+        "z": "428f289f.46d1b8",
+        "name": "Add document",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 925.6041145324707,
+        "y": 1882.0836248397827,
+        "wires": []
+    },
+    {
+        "id": "1bdb053e.5e460b",
+        "type": "cloudant out",
+        "z": "428f289f.46d1b8",
+        "name": "Update document",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "payonly": false,
+        "operation": "insert",
+        "x": 1016.1041145324707,
+        "y": 1733.0836248397827,
+        "wires": []
+    },
+    {
+        "id": "65d2c428.7257cc",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 954.3580379486084,
+        "y": 1687.7438411712646,
+        "wires": []
+    },
+    {
+        "id": "12eef679.4ba9ca",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Add / Update Document",
+        "info": "",
+        "x": 188.10411834716797,
+        "y": 1691.14484167099,
+        "wires": []
+    },
+    {
+        "id": "2e3faa3.a77e156",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload.date",
+        "x": 1161.119743347168,
+        "y": 1573.6679458618164,
+        "wires": []
+    },
+    {
+        "id": "4438e564.192e7c",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Cloudant APIs",
+        "info": "",
+        "x": 172.10413360595703,
+        "y": 2037,
+        "wires": []
+    },
+    {
+        "id": "3f15b9fe.fef386",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/driver/:driver_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 255.1080665588379,
+        "y": 2112.062562942505,
+        "wires": [
+            [
+                "361de08f.970d9",
+                "d4b4ef8e.01087"
+            ]
+        ]
+    },
+    {
+        "id": "361de08f.970d9",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"driver_id:\\\"\" + msg.req.params.driver_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 435.1080741882324,
+        "y": 2111.999849319458,
+        "wires": [
+            [
+                "625abd54.fe7264"
+            ]
+        ]
+    },
+    {
+        "id": "625abd54.fe7264",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Driver ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByDriverID",
+        "x": 603.1119804382324,
+        "y": 2112.9529733657837,
+        "wires": [
+            [
+                "ff3d3ad2.fb4408"
+            ]
+        ]
+    },
+    {
+        "id": "ff3d3ad2.fb4408",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 803.3263244628906,
+        "y": 2113.0040526390076,
+        "wires": []
+    },
+    {
+        "id": "d4b4ef8e.01087",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 453.1119499206543,
+        "y": 2199.5349082946777,
+        "wires": []
+    },
+    {
+        "id": "11554230.7f073e",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/trip/:trip_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 245.8697624206543,
+        "y": 2278.6207933425903,
+        "wires": [
+            [
+                "81ba832e.3462e",
+                "47a116c5.4fc308"
+            ]
+        ]
+    },
+    {
+        "id": "81ba832e.3462e",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"trip_id:\\\"\" + msg.req.params.trip_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 435.8697700500488,
+        "y": 2278.5580797195435,
+        "wires": [
+            [
+                "ff405cd1.d023d"
+            ]
+        ]
+    },
+    {
+        "id": "ff405cd1.d023d",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Trip ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByTripID",
+        "x": 603.8736763000488,
+        "y": 2279.511203765869,
+        "wires": [
+            [
+                "db2ca342.5002"
+            ]
+        ]
+    },
+    {
+        "id": "db2ca342.5002",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 766.8658294677734,
+        "y": 2279.5619535446167,
+        "wires": []
+    },
+    {
+        "id": "47a116c5.4fc308",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 453.8736457824707,
+        "y": 2366.093138694763,
+        "wires": []
+    },
+    {
+        "id": "1608e3ac.e2d1fc",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/date/:date",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 241.86975479125977,
+        "y": 2458.620785713196,
+        "wires": [
+            [
+                "2fed25a.aa358da",
+                "97182d7e.4d728"
+            ]
+        ]
+    },
+    {
+        "id": "2fed25a.aa358da",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"date:\" + new Date(msg.req.params.date).getTime()\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 431.8697624206543,
+        "y": 2458.558072090149,
+        "wires": [
+            [
+                "7f1d2ce0.ec3534",
+                "86aafb89.a8c698"
+            ]
+        ]
+    },
+    {
+        "id": "7f1d2ce0.ec3534",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Date",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByDate",
+        "x": 589.8736686706543,
+        "y": 2459.5111961364746,
+        "wires": [
+            [
+                "d8f36354.e4cef"
+            ]
+        ]
+    },
+    {
+        "id": "d8f36354.e4cef",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 741.865852355957,
+        "y": 2459.562110900879,
+        "wires": []
+    },
+    {
+        "id": "97182d7e.4d728",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 449.8736381530762,
+        "y": 2546.0931310653687,
+        "wires": []
+    },
+    {
+        "id": "86aafb89.a8c698",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 702.1158485412598,
+        "y": 2522.542660713196,
+        "wires": []
+    },
+    {
+        "id": "6ff060f6.4107f",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/date/:from/:to",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 260.86975860595703,
+        "y": 2604.620849609375,
+        "wires": [
+            [
+                "a43dcd7b.69b81",
+                "2a3e8892.db2fe8"
+            ]
+        ]
+    },
+    {
+        "id": "a43dcd7b.69b81",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "var from = new Date(msg.req.params.from).getTime();\nvar to = new Date(msg.req.params.to).getTime();\nmsg.payload = {\n    query: \"date:[\" + from + \" TO \" + to + \"]\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440.86976623535156,
+        "y": 2604.558135986328,
+        "wires": [
+            [
+                "c9d3651e.a5dd58",
+                "f15fd8e5.0cf748"
+            ]
+        ]
+    },
+    {
+        "id": "c9d3651e.a5dd58",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Date Range",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByDate",
+        "x": 637.8737106323242,
+        "y": 2606.511534690857,
+        "wires": [
+            [
+                "af18030a.fa201"
+            ]
+        ]
+    },
+    {
+        "id": "af18030a.fa201",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 811.8659324645996,
+        "y": 2607.5625,
+        "wires": []
+    },
+    {
+        "id": "2a3e8892.db2fe8",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 451.87366104125977,
+        "y": 2658.093159675598,
+        "wires": []
+    },
+    {
+        "id": "f15fd8e5.0cf748",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 644.1158752441406,
+        "y": 2665.54282951355,
+        "wires": []
+    },
+    {
+        "id": "459e8907.b4f678",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/device/:mo_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 248.86975860595703,
+        "y": 2751.620849609375,
+        "wires": [
+            [
+                "5b3a1768.299d78",
+                "13c9feec.2bc371"
+            ]
+        ]
+    },
+    {
+        "id": "5b3a1768.299d78",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"mo_id:\\\"\" + msg.req.params.mo_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 445.86976623535156,
+        "y": 2753.5582122802734,
+        "wires": [
+            [
+                "8073fa2c.f19c28"
+            ]
+        ]
+    },
+    {
+        "id": "8073fa2c.f19c28",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Device ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByMOID",
+        "x": 629.8736953735352,
+        "y": 2752.511459350586,
+        "wires": [
+            [
+                "289e1217.de50be"
+            ]
+        ]
+    },
+    {
+        "id": "289e1217.de50be",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 803.8659086227417,
+        "y": 2753.562240600586,
+        "wires": []
+    },
+    {
+        "id": "13c9feec.2bc371",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 460.8736686706543,
+        "y": 2812.093081474304,
+        "wires": []
+    },
+    {
+        "id": "63c0e70f.075d18",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/jobRequest",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 189.10413360595703,
+        "y": 4369.000244140625,
+        "wires": [
+            [
+                "f377e84.93e2818",
+                "c696a813.bcb358"
+            ]
+        ]
+    },
+    {
+        "id": "f377e84.93e2818",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Config",
+        "func": "msg.driverHostname = \"automotive.internetofthings.ibmcloud.com\";\nmsg.driverTenantId = \"e2d9064f-f5d4-4fc8-bc75-cfe0c90a5f9c\";\nmsg.payload = {\n    from: msg.req.body.from,\n    to: msg.req.body.to\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 394.60413360595703,
+        "y": 4368.000244140625,
+        "wires": [
+            [
+                "ac9b9212.4e2fd"
+            ]
+        ]
+    },
+    {
+        "id": "c696a813.bcb358",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 415.60413360595703,
+        "y": 4442.000244140625,
+        "wires": []
+    },
+    {
+        "id": "ac9b9212.4e2fd",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "sendJobRequest",
+        "method": "POST",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/jobcontrol/job?tenant_id={{driverTenantId}}",
+        "tls": "",
+        "x": 606.104133605957,
+        "y": 4370.000244140625,
+        "wires": [
+            [
+                "487bb26.298424c"
+            ]
+        ]
+    },
+    {
+        "id": "487bb26.298424c",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 772.604133605957,
+        "y": 4370.000244140625,
+        "wires": []
+    },
+    {
+        "id": "f4b4f0c6.92825",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/getTripID",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 183.60413360595703,
+        "y": 4698.000244140625,
+        "wires": [
+            [
+                "2b32b351.c478cc",
+                "42e97bd4.98fef4"
+            ]
+        ]
+    },
+    {
+        "id": "2b32b351.c478cc",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Config",
+        "func": "msg.driverHostname = \"automotive.internetofthings.ibmcloud.com\";\nmsg.driverTenantId = \"e2d9064f-f5d4-4fc8-bc75-cfe0c90a5f9c\";\nmsg.jobid = msg.req.query.job_id\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 394.60413360595703,
+        "y": 4700.000244140625,
+        "wires": [
+            [
+                "21ccef52.b818a"
+            ]
+        ]
+    },
+    {
+        "id": "42e97bd4.98fef4",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 422.10413360595703,
+        "y": 4782.000244140625,
+        "wires": []
+    },
+    {
+        "id": "2ccc93cb.4d1dbc",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 733.604133605957,
+        "y": 4702.000244140625,
+        "wires": []
+    },
+    {
+        "id": "21ccef52.b818a",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "get Trip UUID",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/drbresult/tripSummaryList?tenant_id={{driverTenantId}}&job_id={{jobid}}",
+        "tls": "",
+        "x": 570.604133605957,
+        "y": 4702.000244140625,
+        "wires": [
+            [
+                "2ccc93cb.4d1dbc"
+            ]
+        ]
+    },
+    {
+        "id": "9622c340.d5655",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/jobStatus",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 179.60413360595703,
+        "y": 4531.000244140625,
+        "wires": [
+            [
+                "46f3a2b0.a3c5dc",
+                "8f85e149.32e1e"
+            ]
+        ]
+    },
+    {
+        "id": "46f3a2b0.a3c5dc",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Config",
+        "func": "msg.driverHostname = \"automotive.internetofthings.ibmcloud.com\";\nmsg.driverTenantId = \"e2d9064f-f5d4-4fc8-bc75-cfe0c90a5f9c\";\nmsg.jobid = msg.req.query.job_id\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 399.10413360595703,
+        "y": 4531.000244140625,
+        "wires": [
+            [
+                "7df39567.33915c"
+            ]
+        ]
+    },
+    {
+        "id": "7df39567.33915c",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "get Job Status",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/jobcontrol/job?tenant_id={{driverTenantId}}&job_id={{jobid}}",
+        "tls": "",
+        "x": 575.104133605957,
+        "y": 4533.000244140625,
+        "wires": [
+            [
+                "64b11788.6a04c8"
+            ]
+        ]
+    },
+    {
+        "id": "8f85e149.32e1e",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 420.10413360595703,
+        "y": 4600.000244140625,
+        "wires": []
+    },
+    {
+        "id": "64b11788.6a04c8",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 745.604133605957,
+        "y": 4532.000244140625,
+        "wires": []
+    },
+    {
+        "id": "2d7668ac.7d2708",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/getTripDetails",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 193.60413360595703,
+        "y": 4881.000244140625,
+        "wires": [
+            [
+                "503bb0ec.d7882",
+                "7e91988a.7d0838"
+            ]
+        ]
+    },
+    {
+        "id": "503bb0ec.d7882",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Config",
+        "func": "msg.driverHostname = \"automotive.internetofthings.ibmcloud.com\";\nmsg.driverTenantId = \"e2d9064f-f5d4-4fc8-bc75-cfe0c90a5f9c\";\nmsg.tripid = msg.req.query.trip_id\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 396.10413360595703,
+        "y": 4879.000244140625,
+        "wires": [
+            [
+                "bfbc162.d1992e8"
+            ]
+        ]
+    },
+    {
+        "id": "bfbc162.d1992e8",
+        "type": "http request",
+        "z": "428f289f.46d1b8",
+        "name": "get Trip Details",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://{{driverHostname}}/driverinsights/drbresult/trip?tenant_id={{driverTenantId}}&trip_uuid={{tripid}}",
+        "tls": "",
+        "x": 572.104133605957,
+        "y": 4881.000244140625,
+        "wires": [
+            [
+                "82aeffe3.47922"
+            ]
+        ]
+    },
+    {
+        "id": "7e91988a.7d0838",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 416.10413360595703,
+        "y": 4935.000244140625,
+        "wires": []
+    },
+    {
+        "id": "82aeffe3.47922",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 741.604133605957,
+        "y": 4881.000244140625,
+        "wires": []
+    },
+    {
+        "id": "fb7fe810.a9fc18",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Driver Behavior API Calls",
+        "info": "",
+        "x": 160.60413360595703,
+        "y": 4313.000244140625,
+        "wires": []
+    },
+    {
+        "id": "c31ed38f.7523f",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Retrieve IOTP events",
+        "func": "msg.rawData.trip_id = msg.payload[0].trip_id\nnode.warn(msg.payload[0].trip_id)\nif (msg.eventType ==='gps'){\n    return [null, msg] ;\n} else {\n    return [msg, null] ;\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 275.00001525878906,
+        "y": 504.8889570236206,
+        "wires": [
+            [
+                "700414a7.bbd55c",
+                "f0c89f97.295db"
+            ],
+            [
+                "4b54eb4e.57ffc4",
+                "f9369aff.819b68"
+            ]
+        ]
+    },
+    {
+        "id": "700414a7.bbd55c",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 496.1527557373047,
+        "y": 462.3889636993408,
+        "wires": []
+    },
+    {
+        "id": "4b54eb4e.57ffc4",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 497.3784694671631,
+        "y": 523.0696096420288,
+        "wires": []
+    },
+    {
+        "id": "d1ed3f72.0cd8c",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 537.8658828735352,
+        "y": 1068.6640625,
+        "wires": []
+    },
+    {
+        "id": "717c9f78.703dd",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/count/:trip_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 226.1041488647461,
+        "y": 2904.0005798339844,
+        "wires": [
+            [
+                "7b7bcfa.c5f673",
+                "de7dc153.8dfab"
+            ]
+        ]
+    },
+    {
+        "id": "7b7bcfa.c5f673",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"trip_id:\\\"\" + msg.req.params.trip_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480.1041145324707,
+        "y": 2894.000557899475,
+        "wires": [
+            [
+                "da5b3598.8191a8"
+            ]
+        ]
+    },
+    {
+        "id": "da5b3598.8191a8",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Trip ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByTripID",
+        "x": 654.1080474853516,
+        "y": 2896.9536504745483,
+        "wires": [
+            [
+                "b266e2c7.3c65e"
+            ]
+        ]
+    },
+    {
+        "id": "617b41d.ea91cc",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 974.1002349853516,
+        "y": 2894.0044317245483,
+        "wires": []
+    },
+    {
+        "id": "b266e2c7.3c65e",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Get count",
+        "func": "var counts = {}\nif (msg.payload.length > 0) {\n    var data = msg.payload[0];\n    if (data.hasOwnProperty(\"ctx_sub_trips\") && data.ctx_sub_trips.length > 0) {\n        data.ctx_sub_trips.forEach(function(st) {\n            var details = st.driving_behavior_details\n            if(details.length > 0) {\n                details.forEach(function(behavior) {\n                    if (counts.hasOwnProperty(behavior.behavior_name)) {\n                        counts[behavior.behavior_name] += 1\n                    } else {\n                        counts[behavior.behavior_name] = 1\n                    }\n                })\n            }\n        });\n    }\n}\nmsg.payload = counts\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 829.6041412353516,
+        "y": 2895.0005254745483,
+        "wires": [
+            [
+                "617b41d.ea91cc"
+            ]
+        ]
+    },
+    {
+        "id": "de7dc153.8dfab",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 491.10414123535156,
+        "y": 2939.0005254745483,
+        "wires": []
+    },
+    {
+        "id": "4dcf60.16dd90a",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 734.3853988647461,
+        "y": 67.06597137451172,
+        "wires": []
+    },
+    {
+        "id": "e93d2066.8b5eb",
+        "type": "cloudant out",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "cloudant": "dd6558d0.599d38",
+        "database": "probe_data",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 1208.1564292907715,
+        "y": 793.5592694282532,
+        "wires": []
+    },
+    {
+        "id": "f580b619.c63b18",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/trip/:trip_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 204.38196563720703,
+        "y": 3666.4074058532715,
+        "wires": [
+            [
+                "4b024766.8e15f8",
+                "5aa6028d.268bec"
+            ]
+        ]
+    },
+    {
+        "id": "4b024766.8e15f8",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"trip_id:\" + msg.req.params.trip_id\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 3667.3344345092773,
+        "wires": [
+            [
+                "de34eb02.525808"
+            ]
+        ]
+    },
+    {
+        "id": "de34eb02.525808",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Data Points by Trip ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "probe_data",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByTripID",
+        "x": 636.0039367675781,
+        "y": 3666.2875051498413,
+        "wires": [
+            [
+                "7f63a01a.d5792",
+                "c3ea9b44.ee74d8"
+            ]
+        ]
+    },
+    {
+        "id": "7f63a01a.d5792",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 896.9961700439453,
+        "y": 3666.338390350342,
+        "wires": []
+    },
+    {
+        "id": "5aa6028d.268bec",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 439.0000114440918,
+        "y": 3719.3343620300293,
+        "wires": []
+    },
+    {
+        "id": "84cb8f2e.28bf9",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Data",
+        "func": "return {\n    payload: {\n        latitude: msg.matched_latitude, \n        longitude: msg.matched_longitude,\n        trip_id: msg.trip_id,\n        driver_id: msg.driver_id\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1046.5001487731934,
+        "y": 794.2675094604492,
+        "wires": [
+            [
+                "e93d2066.8b5eb"
+            ]
+        ]
+    },
+    {
+        "id": "5b772b77.aa67d4",
+        "type": "comment",
+        "z": "428f289f.46d1b8",
+        "name": "Tracking APIs",
+        "info": "",
+        "x": 142.37498474121094,
+        "y": 3600.604736328125,
+        "wires": []
+    },
+    {
+        "id": "565a9707.51d628",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/trip/:driver_id/:status",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 151.38890838623047,
+        "y": 3881.740430831909,
+        "wires": [
+            [
+                "96152c11.bc43f"
+            ]
+        ]
+    },
+    {
+        "id": "df500bce.e9a928",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "cloudant": "dd6558d0.599d38",
+        "database": "current_trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchDriver",
+        "x": 774.3750915527344,
+        "y": 3812.247533798218,
+        "wires": [
+            [
+                "f6578922.cb8e38",
+                "87494b5b.ce3d18"
+            ]
+        ]
+    },
+    {
+        "id": "f6578922.cb8e38",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 944.378547668457,
+        "y": 3760.9522285461426,
+        "wires": []
+    },
+    {
+        "id": "cd2f6cb4.f53c2",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.driver = msg.req.params.driver_id;\nmsg.payload = {\n    query: \"driver_id:\\\"\" + msg.driver + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530.0000381469727,
+        "y": 3809.6677780151367,
+        "wires": [
+            [
+                "df500bce.e9a928"
+            ]
+        ]
+    },
+    {
+        "id": "87494b5b.ce3d18",
+        "type": "switch",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "property": "payload.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 939.3749923706055,
+        "y": 3811.04213142395,
+        "wires": [
+            [
+                "68179a94.a9df04"
+            ],
+            [
+                "6025a9e.f3b6058"
+            ]
+        ]
+    },
+    {
+        "id": "c1fac7c5.633448",
+        "type": "cloudant out",
+        "z": "428f289f.46d1b8",
+        "name": "current_trips [Add]",
+        "cloudant": "dd6558d0.599d38",
+        "database": "current_trips",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 1302.0523223876953,
+        "y": 3758.563632965088,
+        "wires": []
+    },
+    {
+        "id": "68179a94.a9df04",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "var trip = Math.floor(Math.random() * 10000000000)\nmsg.payload = {\n    \"driver_id\": msg.driver,\n    \"trip_id\": trip\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1100.6667938232422,
+        "y": 3802.890163421631,
+        "wires": [
+            [
+                "c1fac7c5.633448",
+                "e173fdf0.f7d6b",
+                "26c3be52.dbb732"
+            ]
+        ]
+    },
+    {
+        "id": "e173fdf0.f7d6b",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 1319.4896640777588,
+        "y": 3825.2469902038574,
+        "wires": []
+    },
+    {
+        "id": "59c651c3.6816f",
+        "type": "cloudant out",
+        "z": "428f289f.46d1b8",
+        "name": "Update Trip",
+        "cloudant": "dd6558d0.599d38",
+        "database": "current_trips",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 1306.4932403564453,
+        "y": 3898.563726425171,
+        "wires": []
+    },
+    {
+        "id": "6025a9e.f3b6058",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "var data = msg.payload[0];\nvar trip = Math.floor(Math.random() * 10000000000)\ndata.trip_id = trip\nmsg.payload = data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1105.4860534667969,
+        "y": 3864.167293548584,
+        "wires": [
+            [
+                "e173fdf0.f7d6b",
+                "59c651c3.6816f",
+                "32aef21b.bcdd3e"
+            ]
+        ]
+    },
+    {
+        "id": "16817553.03080b",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "cloudant": "dd6558d0.599d38",
+        "database": "current_trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchDriver",
+        "x": 75,
+        "y": 629.8888187408447,
+        "wires": [
+            [
+                "917df8b7.2f2668",
+                "1b20a09c.6d2f1f"
+            ]
+        ]
+    },
+    {
+        "id": "8d129ea.259586",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.rawData = msg.payload.d\nmsg.rawData.driver_id = msg.deviceId\nmsg.payload = {\n    query: \"driver_id:\\\"\" + msg.deviceId + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 75.99996948242188,
+        "y": 580.1111087799072,
+        "wires": [
+            [
+                "16817553.03080b"
+            ]
+        ]
+    },
+    {
+        "id": "917df8b7.2f2668",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 64.38196563720703,
+        "y": 686.2918186187744,
+        "wires": []
+    },
+    {
+        "id": "1b20a09c.6d2f1f",
+        "type": "switch",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "property": "payload.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 216.3750114440918,
+        "y": 674.2744617462158,
+        "wires": [
+            [
+                "c31ed38f.7523f"
+            ],
+            [
+                "350a3b18.4cb7c4"
+            ]
+        ]
+    },
+    {
+        "id": "fca55899.3dc378",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"driver_id:\\\"\" + msg.req.params.driver_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 513.0000762939453,
+        "y": 3977.1124000549316,
+        "wires": [
+            [
+                "2ee3c74b.29c028"
+            ]
+        ]
+    },
+    {
+        "id": "2ee3c74b.29c028",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "cloudant": "dd6558d0.599d38",
+        "database": "current_trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchDriver",
+        "x": 677.375114440918,
+        "y": 3976.692205429077,
+        "wires": [
+            [
+                "e5ca5d63.a8582",
+                "5a258c48.f56e64"
+            ]
+        ]
+    },
+    {
+        "id": "e5ca5d63.a8582",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 857.3785781860352,
+        "y": 4034.397705078125,
+        "wires": []
+    },
+    {
+        "id": "5a258c48.f56e64",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "if(msg.payload.length > 0) {\n    msg.payload = msg.payload[0];\n    return [null, msg];\n}\nreturn [msg, null];",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 856.9376335144043,
+        "y": 3976.386484146118,
+        "wires": [
+            [
+                "9ff8d45a.e6bca8"
+            ],
+            [
+                "9ff8d45a.e6bca8",
+                "1b9cc036.0dc02"
+            ]
+        ]
+    },
+    {
+        "id": "32aef21b.bcdd3e",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1158.5971717834473,
+        "y": 3934.955331802368,
+        "wires": []
+    },
+    {
+        "id": "26c3be52.dbb732",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1189.222183227539,
+        "y": 3693.778169631958,
+        "wires": []
+    },
+    {
+        "id": "1b9cc036.0dc02",
+        "type": "cloudant out",
+        "z": "428f289f.46d1b8",
+        "name": "Remove",
+        "cloudant": "dd6558d0.599d38",
+        "database": "current_trips",
+        "service": "_ext_",
+        "payonly": false,
+        "operation": "delete",
+        "x": 1070.375389099121,
+        "y": 4081.0148248672485,
+        "wires": []
+    },
+    {
+        "id": "9ff8d45a.e6bca8",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 1044.1597156524658,
+        "y": 3977.4731273651123,
+        "wires": []
+    },
+    {
+        "id": "7695b3a6.2efc1c",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/distance/:driver_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 224.37844848632812,
+        "y": 3044.194980621338,
+        "wires": [
+            [
+                "fdec7b8.8a33988"
+            ]
+        ]
+    },
+    {
+        "id": "fdec7b8.8a33988",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"driver_id:\\\"\" + msg.req.params.driver_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 464.9999408721924,
+        "y": 3046.8889904022217,
+        "wires": [
+            [
+                "579b6e7b.89606"
+            ]
+        ]
+    },
+    {
+        "id": "579b6e7b.89606",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Driver ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByDriverID",
+        "x": 647.0038604736328,
+        "y": 3043.84227848053,
+        "wires": [
+            [
+                "8510031f.55726",
+                "2003804f.ce3c1"
+            ]
+        ]
+    },
+    {
+        "id": "5236500d.760c9",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 1009.9960479736328,
+        "y": 3046.893112182617,
+        "wires": []
+    },
+    {
+        "id": "8510031f.55726",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Get total distance",
+        "func": "if (msg.payload.length > 0) {\n    var total = 0\n    var trips = msg.payload;\n    trips.forEach(function(data) {\n        if (data.hasOwnProperty(\"trip_features\") && data.trip_features.length > 0) {\n            data.trip_features.forEach(function(feature) {\n                if(feature.feature_name == \"distance\") {\n                    node.warn(feature.feature_value)\n                    total += parseFloat(feature.feature_value)\n                }\n            });\n        }\n    })\n    node.warn(total)\n    msg.payload = {distance: total}\n    return msg\n}\nmsg.payload = {\n        \"error\": \"Driver not found\"\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 853.4999504089355,
+        "y": 3044.88915348053,
+        "wires": [
+            [
+                "5236500d.760c9"
+            ]
+        ]
+    },
+    {
+        "id": "2003804f.ce3c1",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 803.9999694824219,
+        "y": 3102.888994216919,
+        "wires": []
+    },
+    {
+        "id": "96152c11.bc43f",
+        "type": "switch",
+        "z": "428f289f.46d1b8",
+        "name": "Status",
+        "property": "req.params.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "start",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "end",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 350.375,
+        "y": 3882.159921646118,
+        "wires": [
+            [
+                "cd2f6cb4.f53c2"
+            ],
+            [
+                "fca55899.3dc378"
+            ]
+        ]
+    },
+    {
+        "id": "aa800e92.26782",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/errors/:driver_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 212.99994659423828,
+        "y": 3156.666748046875,
+        "wires": [
+            [
+                "6c3d0938.63eea8"
+            ]
+        ]
+    },
+    {
+        "id": "6c3d0938.63eea8",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Dummy Data",
+        "func": "msg.payload = {\n    \"errors\": msg.req.params.driver_id.length * 3\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 455.3888626098633,
+        "y": 3156.941324234009,
+        "wires": [
+            [
+                "7183ce5e.7399b"
+            ]
+        ]
+    },
+    {
+        "id": "7183ce5e.7399b",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 658.3818988800049,
+        "y": 3158.027858734131,
+        "wires": []
+    },
+    {
+        "id": "848362fe.ddecc",
+        "type": "http in",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "url": "/db/driver/trips/:driver_id",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 218.1041259765625,
+        "y": 3237.000066757202,
+        "wires": [
+            [
+                "3c28d5a2.b8c7ba",
+                "a90e7c19.192b2"
+            ]
+        ]
+    },
+    {
+        "id": "3c28d5a2.b8c7ba",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Set query",
+        "func": "msg.payload = {\n    query: \"driver_id:\\\"\" + msg.req.params.driver_id + \"\\\"\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 435.10413360595703,
+        "y": 3237.937255859375,
+        "wires": [
+            [
+                "fe8f7674.a24ae8"
+            ]
+        ]
+    },
+    {
+        "id": "fe8f7674.a24ae8",
+        "type": "cloudant in",
+        "z": "428f289f.46d1b8",
+        "name": "Search by Driver ID",
+        "cloudant": "dd6558d0.599d38",
+        "database": "trips",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "searchDoc",
+        "index": "searchByDriverID",
+        "x": 619.108039855957,
+        "y": 3237.890380859375,
+        "wires": [
+            [
+                "548b9c0c.8b88c4"
+            ]
+        ]
+    },
+    {
+        "id": "5b6d8ad5.77ea54",
+        "type": "http response",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "x": 1005.100227355957,
+        "y": 3237.94140625,
+        "wires": []
+    },
+    {
+        "id": "a90e7c19.192b2",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 509.1080093383789,
+        "y": 3287.4723148345947,
+        "wires": []
+    },
+    {
+        "id": "548b9c0c.8b88c4",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Get Trip Count",
+        "func": "msg.payload = {\n    \"trips\": msg.payload.length\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 841.604133605957,
+        "y": 3238,
+        "wires": [
+            [
+                "5b6d8ad5.77ea54"
+            ]
+        ]
+    },
+    {
+        "id": "350a3b18.4cb7c4",
+        "type": "function",
+        "z": "428f289f.46d1b8",
+        "name": "Trip not started",
+        "func": "node.warn(\"Trip not started\")\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 292.60413360595703,
+        "y": 742,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3ea9b44.ee74d8",
+        "type": "debug",
+        "z": "428f289f.46d1b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload.length",
+        "x": 700.604133605957,
+        "y": 3715,
+        "wires": []
+    },
+    {
+        "id": "d168539a.9b8a2",
+        "type": "http in",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "url": "/api/v1/login",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 130.1999969482422,
+        "y": 120.19999694824219,
+        "wires": [
+            [
+                "13ac0cd7.123873",
+                "3aeb5f08.ec5f8"
+            ]
+        ]
+    },
+    {
+        "id": "bc93578e.38f2c8",
+        "type": "comment",
+        "z": "f2de7ba6.5b8188",
+        "name": "User Validation",
+        "info": "",
+        "x": 119.5333251953125,
+        "y": 69.42221450805664,
+        "wires": []
+    },
+    {
+        "id": "13ac0cd7.123873",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "User Login params",
+        "func": "msg.userName           = msg.req.body.userName;  \nmsg.password           = msg.req.body.password;\n\nif ((typeof msg.userName === 'undefined') || !msg.userName || (typeof msg.password === 'undefined') || !msg.password){\n    // userName or password empty. \n    msg.payload  =\n        {\n            \"version\" : \"1.0\",\n            \"status\" : \"Failed\",\n            \"description\" : \"UserName or Password cannot be empty\",\n            \"statusCode\" : \"200\",\n            \"responseCode\" : \"1001\"\n        }\n     \n    return [msg, null];  \n        \n} else {\n    msg.payload ={}; \n    msg.payload={ query :\"userName:\\\"\"+msg.userName+\"\\\"\" ,limit : 1};\n    \n    return [null, msg];\n}\n\n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 441.0888900756836,
+        "y": 120.31110572814941,
+        "wires": [
+            [
+                "2c177240.da998e",
+                "1aa9c14c.2d854f"
+            ],
+            [
+                "864cfab.c011e08",
+                "192569f8.ed1a56"
+            ]
+        ]
+    },
+    {
+        "id": "2e2bf04e.edf95",
+        "type": "cloudant out",
+        "z": "f2de7ba6.5b8188",
+        "name": "Add New User",
+        "cloudant": "dd6558d0.599d38",
+        "database": "users",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 1335.4500846862793,
+        "y": 474.72782611846924,
+        "wires": []
+    },
+    {
+        "id": "192569f8.ed1a56",
+        "type": "cloudant in",
+        "z": "f2de7ba6.5b8188",
+        "name": "userByName",
+        "cloudant": "dd6558d0.599d38",
+        "database": "users",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "userSearch",
+        "index": "userByName",
+        "x": 723.3666534423828,
+        "y": 122.8666467666626,
+        "wires": [
+            [
+                "d6b5dba7.858ac8",
+                "878c7bf0.146098"
+            ]
+        ]
+    },
+    {
+        "id": "4626e450.d8060c",
+        "type": "comment",
+        "z": "f2de7ba6.5b8188",
+        "name": "User Registration",
+        "info": "",
+        "x": 111.53333282470703,
+        "y": 316.755539894104,
+        "wires": []
+    },
+    {
+        "id": "d6b5dba7.858ac8",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 802.8666667938232,
+        "y": 162.75554752349854,
+        "wires": []
+    },
+    {
+        "id": "878c7bf0.146098",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "validate user data",
+        "func": "// first check the payload is empty or not.\n\nif (typeof msg.payload === 'undefined' || !msg.payload || msg.payload.length === 0){\n    // payload is empty.\n\n    msg.payload  =\n        {\n            \"version\" : \"1.0\",\n            \"status\" : \"Failed\",\n            \"description\" : \"User is not registered in the system\",\n            \"statusCode\" : \"200\",\n            \"responseCode\" : \"1002\"\n        }\n} else {\n\n    if(msg.password === msg.payload[0].password){\n        //password matching successful. \n        var payload = {} ; \n        payload.status = \"Success\"; \n        payload.description = \"User Login validation successful\";\n        payload.statusCode = \"200\";\n        payload.responseCode = \"1000\";\n        payload.userName = msg.payload[0].userName;\n        payload.email = msg.payload[0].email;\n        payload.phone = msg.payload[0].phone;\n        payload.deviceId = msg.payload[0].deviceId;\n        payload.driverName = msg.payload[0].driverName;\n        payload.registration_date = msg.payload[0].registration_date;\n        \n        msg.payload = payload;\n\n    } else {\n        //password matching failed. \n        msg.payload  =\n        {\n            \"version\" : \"1.0\",\n            \"status\" : \"Failed\",\n            \"description\" : \"Password is invalid\",\n            \"statusCode\" : \"200\",\n            \"responseCode\" : \"1003\"\n        }\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1014.8666839599609,
+        "y": 117.75555515289307,
+        "wires": [
+            [
+                "dd96df9b.8ed36",
+                "1aa9c14c.2d854f"
+            ]
+        ]
+    },
+    {
+        "id": "1aa9c14c.2d854f",
+        "type": "http response",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "x": 1162.199966430664,
+        "y": 26.866663932800293,
+        "wires": []
+    },
+    {
+        "id": "dd96df9b.8ed36",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1078.4222526550293,
+        "y": 141.42220973968506,
+        "wires": []
+    },
+    {
+        "id": "3aeb5f08.ec5f8",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 208.42222595214844,
+        "y": 163.42222213745117,
+        "wires": []
+    },
+    {
+        "id": "f8e2994.779b368",
+        "type": "http in",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "url": "/api/v1/newUserRegistration",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 156.64443969726562,
+        "y": 352.8666458129883,
+        "wires": [
+            [
+                "1cf792a4.273c6d"
+            ]
+        ]
+    },
+    {
+        "id": "1cf792a4.273c6d",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "User Registration params",
+        "func": "\nmsg.userName           = msg.req.body.userName;  \nmsg.password           = msg.req.body.password;\nmsg.email              = msg.req.body.email;\nmsg.phone              = msg.req.body.phone;\nmsg.vehicleNo          = msg.req.body.vehicleNo;\nmsg.driverName         = msg.req.body.driverName;\nmsg.deviceType         = msg.req.body.deviceType;\nmsg.deviceId           = msg.req.body.deviceId;\n\nmsg.payload ={}; \nmsg.payload={ query :\"userName:\\\"\"+msg.userName+\"\\\"\" ,limit : 1};\n\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 428.8666534423828,
+        "y": 351.8666305541992,
+        "wires": [
+            [
+                "70133f9.b9acac",
+                "81deec0f.6a2f3"
+            ]
+        ]
+    },
+    {
+        "id": "70133f9.b9acac",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 453.86666107177734,
+        "y": 398.1999797821045,
+        "wires": []
+    },
+    {
+        "id": "639588e9.9e7318",
+        "type": "http response",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "x": 1306.0888633728027,
+        "y": 621.8666524887085,
+        "wires": []
+    },
+    {
+        "id": "e3d3990f.8cf1e8",
+        "type": "delay",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 982.9221992492676,
+        "y": 526.755542755127,
+        "wires": [
+            [
+                "639588e9.9e7318"
+            ]
+        ]
+    },
+    {
+        "id": "81deec0f.6a2f3",
+        "type": "cloudant in",
+        "z": "f2de7ba6.5b8188",
+        "name": "userByName",
+        "cloudant": "dd6558d0.599d38",
+        "database": "users",
+        "service": "_ext_",
+        "search": "_idx_",
+        "design": "userSearch",
+        "index": "userByName",
+        "x": 648.5333518981934,
+        "y": 351.97776985168457,
+        "wires": [
+            [
+                "eaad2394.6d7a7"
+            ]
+        ]
+    },
+    {
+        "id": "eaad2394.6d7a7",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "check user Exist",
+        "func": "\nif (typeof msg.payload === 'undefined' || !msg.payload || msg.payload.length === 0){\n    msg.availabilityStatus = 0; \n} else {\n    msg.availabilityStatus = 1;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 878.7555694580078,
+        "y": 349.7555332183838,
+        "wires": [
+            [
+                "ab04b3a5.6b7b3"
+            ]
+        ]
+    },
+    {
+        "id": "ab04b3a5.6b7b3",
+        "type": "switch",
+        "z": "f2de7ba6.5b8188",
+        "name": "availabilityStatus",
+        "property": "availabilityStatus",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 385.5890007019043,
+        "y": 523.4221591949463,
+        "wires": [
+            [
+                "f3f93891.fb35f8",
+                "172da58d.3c6b2a"
+            ],
+            [
+                "457a7207.252ecc"
+            ]
+        ]
+    },
+    {
+        "id": "f3f93891.fb35f8",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "User is not exist",
+        "func": "var rand = function() {\n    return Math.random().toString(36).substr(2); // remove `0.`\n};\n\nvar token = function() {\n    return rand() + rand(); \n};\n\nmsg.authToken = token();\n\n// payload setting for http response and IOTP.\nmsg.payload={ \n    \"userName\" : msg.userName, \n    \"email\"    : msg.email,\n    \"phone\"    : msg.phone,\n    \"vehicleNo\": msg.vehicleNo,\n    \"driverName\": msg.driverName,\n    \"deviceType\": msg.deviceType,\n    \"deviceId\": msg.deviceId,\n    \"authToken\": msg.authToken,\n    \"registration_date\" : new Date(),\n    \"status\" : \"Success\",\n    \"statusCode\" : \"200\",\n    \"responseCode\" : \"2000\"\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 647.1999740600586,
+        "y": 501.4222469329834,
+        "wires": [
+            [
+                "e3d3990f.8cf1e8",
+                "1a440fd4.de0b2",
+                "606beef3.cd6c7",
+                "ca5a3288.f2303"
+            ]
+        ]
+    },
+    {
+        "id": "457a7207.252ecc",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "Username already exist",
+        "func": "// user already exist in the system, hence user registration is failed. \n\n\nmsg.payload  =\n{\n    \"version\" : \"1.0\",\n    \"status\" : \"Failed\",\n    \"description\" : \"Username already exist. Try different username\",\n    \"statusCode\" : \"200\",\n    \"responseCode\" : \"2001\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 672.7556381225586,
+        "y": 629.1999340057373,
+        "wires": [
+            [
+                "1a440fd4.de0b2",
+                "639588e9.9e7318"
+            ]
+        ]
+    },
+    {
+        "id": "172da58d.3c6b2a",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 648.311113357544,
+        "y": 468.08887481689453,
+        "wires": []
+    },
+    {
+        "id": "1a440fd4.de0b2",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 881.6444244384766,
+        "y": 582.5332202911377,
+        "wires": []
+    },
+    {
+        "id": "53aae9e3.9fc928",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1123.833480834961,
+        "y": 346.26671028137207,
+        "wires": []
+    },
+    {
+        "id": "5c077644.925708",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "response set",
+        "func": "// msg.headers = {\n//     'Access-Control-Allow-Origin' : '*',\n//     'Access-Control-Allow-Methods' : 'GET, POST, PUT',\n//     'Access-Control-Allow-Headers' : 'X-Requested-With,content-type, Origin, X-Auth-Token',\n//     'Access-Control-Allow-Credentials' : 'true', \n//     'Content-Type': 'application/json'\n// }\n\n\nif (msg.error === null) {\n    // for the success scenario we are getting correct payload as defined.\n\n    return [null, msg];\n    \n} else {\n// this else part triggers only for Device registration issues. \n\nmsg.payload  =\n{\n    \"version\" : \"1.0\",\n    \"status\" : \"Failed\",\n    //\"description\" : msg.errorDescription,\n    \"description\" : \"Device Registration is failed.\",\n    \"statusCode\" : \"200\",\n    \"responseCode\" : \"1005\"\n}\n    return [msg, null];\n}\n\n\n\n\n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 1095.3945960998535,
+        "y": 682.3888568878174,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2c177240.da998e",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 624.222200181749,
+        "y": 54.53333229488797,
+        "wires": []
+    },
+    {
+        "id": "864cfab.c011e08",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 593.1110890706382,
+        "y": 207.86665715111627,
+        "wires": []
+    },
+    {
+        "id": "ac38525b.eb006",
+        "type": "comment",
+        "z": "f2de7ba6.5b8188",
+        "name": "Get all users",
+        "info": "",
+        "x": 93.33332824707031,
+        "y": 930.1722650527954,
+        "wires": []
+    },
+    {
+        "id": "c4ddc7b6.d2e5e8",
+        "type": "http in",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "url": "/api/v1/getAllDrivers",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 131.5277557373047,
+        "y": 963.3667001724243,
+        "wires": [
+            [
+                "e49ba998.2306a8"
+            ]
+        ]
+    },
+    {
+        "id": "e49ba998.2306a8",
+        "type": "cloudant in",
+        "z": "f2de7ba6.5b8188",
+        "name": "get all users",
+        "cloudant": "dd6558d0.599d38",
+        "database": "users",
+        "service": "_ext_",
+        "search": "_all_",
+        "design": "userSearch",
+        "index": "userByName",
+        "x": 416.9445552825928,
+        "y": 966.4500007629395,
+        "wires": [
+            [
+                "236f4392.09378c",
+                "ededb497.c71408"
+            ]
+        ]
+    },
+    {
+        "id": "236f4392.09378c",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "get all data",
+        "func": "var responsObj = {'data':[]};\n\nfor(i=0;i<msg.payload.length;i++) {\n    // node.warn(msg.payload[i])\n    delete msg.payload[i]._id;\n    delete msg.payload[i]._rev;\n    delete msg.payload[i].password;\n    responsObj.data.push(msg.payload[i])\n}\n\nmsg.payload = responsObj;\nmsg.payload.statusCode = 200;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 685.4166641235352,
+        "y": 966.3111343383789,
+        "wires": [
+            [
+                "c714fa92.b81118",
+                "d4d81c62.de37f"
+            ]
+        ]
+    },
+    {
+        "id": "c714fa92.b81118",
+        "type": "http response",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "x": 997.5554809570312,
+        "y": 962.922266960144,
+        "wires": []
+    },
+    {
+        "id": "ededb497.c71408",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 478.52775382995605,
+        "y": 1005.0334987640381,
+        "wires": []
+    },
+    {
+        "id": "d4d81c62.de37f",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 752.5555801391602,
+        "y": 999.7556676864624,
+        "wires": []
+    },
+    {
+        "id": "606beef3.cd6c7",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "Registration DB payload",
+        "func": "// payload setting for database. \nmsg.payload={ \n    \"userName\" : msg.userName, \n    \"password\" : msg.password, \n    \"email\"    : msg.email,\n    \"phone\"    : msg.phone,\n    \"vehicleNo\": msg.vehicleNo,\n    \"driverName\": msg.driverName,\n    \"deviceType\": msg.deviceType,\n    \"deviceId\": msg.deviceId,\n    \"authToken\": msg.authToken,\n    \"registration_date\" : new Date()\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1039.3889389038086,
+        "y": 475.33891010284424,
+        "wires": [
+            [
+                "2e2bf04e.edf95"
+            ]
+        ]
+    },
+    {
+        "id": "c97d017e.2c183",
+        "type": "function",
+        "z": "f2de7ba6.5b8188",
+        "name": "device status",
+        "func": "\nif(msg.payload.data ==='undefined' || !msg.payload.data){\n    \n} else {\n    var data = msg.payload.data; \n    msg.errorDescription = data.message;\n    throw new Error(data.message); \n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1138.4583892822266,
+        "y": 407.11667823791504,
+        "wires": [
+            [
+                "4f807e57.8429a"
+            ]
+        ]
+    },
+    {
+        "id": "4f807e57.8429a",
+        "type": "debug",
+        "z": "f2de7ba6.5b8188",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1328.4583854675293,
+        "y": 366.8666639328003,
+        "wires": []
+    },
+    {
+        "id": "ca5a3288.f2303",
+        "type": "device-manager",
+        "z": "f2de7ba6.5b8188",
+        "auth": "api",
+        "name": "",
+        "apiKey": "84d58618.5e6398",
+        "deviceType": "",
+        "method": "Create",
+        "deviceId": "",
+        "password": "",
+        "ignore": false,
+        "x": 909.4999885559082,
+        "y": 439.06666469573975,
+        "wires": [
+            [
+                "c97d017e.2c183",
+                "53aae9e3.9fc928"
+            ]
+        ]
+    },
+    {
+        "id": "544b2eb4.36741",
+        "type": "inject",
+        "z": "76cf0de5.045eb4",
+        "name": "Json1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 191.33331298828125,
+        "y": 288.44444274902344,
+        "wires": [
+            [
+                "e20c0738.1e1638"
+            ]
+        ]
+    },
+    {
+        "id": "d022fda6.8631c",
+        "type": "inject",
+        "z": "76cf0de5.045eb4",
+        "name": "Json2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 196.33328247070312,
+        "y": 391.44444274902344,
+        "wires": [
+            [
+                "1569a009.fe93b"
+            ]
+        ]
+    },
+    {
+        "id": "1569a009.fe93b",
+        "type": "function",
+        "z": "76cf0de5.045eb4",
+        "name": "Json2",
+        "func": "msg.payload =\n{\n    \"d\": {\n \"latitude\": 12.9521265,      \n \"longitude\": 77.6439412,  \n\"speed\":              55.78,\n\"heading\":          \"NE\",\n\"timestamp\":     \"2017-03-17T15:17:21.000+01:00\",\n\"mo_id\":              \"234124\",\n\"rpm\":            34.67,\n\"engine_load\": 32.21,\n\"distance_dtc_clear\":  763.4,\n\"engine_coolant_temp\":  32.43\n}\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 443.33331298828125,
+        "y": 395.44444274902344,
+        "wires": [
+            [
+                "5a2daab2.1f76b4"
+            ]
+        ]
+    },
+    {
+        "id": "e20c0738.1e1638",
+        "type": "function",
+        "z": "76cf0de5.045eb4",
+        "name": "Json1",
+        "func": "msg.payload =\n\n{     \n    \"d\": {\n\"latitude\": \"12.9521265\",\n\"longitude\": \"77.6439412\",\n\"timestamp\": \"2017-03-17T15:17:21.000+01:00\"\n}\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440.71875,
+        "y": 284.8055877685547,
+        "wires": [
+            [
+                "937d1079.ea961"
+            ]
+        ]
+    },
+    {
+        "id": "937d1079.ea961",
+        "type": "ibmiot out",
+        "z": "76cf0de5.045eb4",
+        "authentication": "apiKey",
+        "apiKey": "2c9fa98c.8e9f26",
+        "outputType": "evt",
+        "deviceId": "Bananab",
+        "deviceType": "OBD2",
+        "eventCommandType": "gps",
+        "format": "json",
+        "data": "data",
+        "qos": 0,
+        "name": "IBM IoT",
+        "service": "registered",
+        "x": 732.3334350585938,
+        "y": 286.44444274902344,
+        "wires": []
+    },
+    {
+        "id": "5a2daab2.1f76b4",
+        "type": "ibmiot out",
+        "z": "76cf0de5.045eb4",
+        "authentication": "apiKey",
+        "apiKey": "2c9fa98c.8e9f26",
+        "outputType": "evt",
+        "deviceId": "Bananab",
+        "deviceType": "OBD2",
+        "eventCommandType": "other",
+        "format": "json",
+        "data": "data",
+        "qos": 0,
+        "name": "IBM IoT",
+        "service": "registered",
+        "x": 732.3333129882812,
+        "y": 396.44444274902344,
+        "wires": []
+    },
+    {
+        "id": "a6557041.d019c",
+        "type": "ibmiot in",
+        "z": "76cf0de5.045eb4",
+        "authentication": "apiKey",
+        "apiKey": "2c9fa98c.8e9f26",
+        "inputType": "evt",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "OBD2",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 164.33331298828125,
+        "y": 99.44444274902344,
+        "wires": [
+            [
+                "2153d561.5f7bca"
+            ]
+        ]
+    },
+    {
+        "id": "2153d561.5f7bca",
+        "type": "function",
+        "z": "76cf0de5.045eb4",
+        "name": "Retrieve IOTP events",
+        "func": "var payloadObj = {};\n\npayloadObj            = msg.payload.d;\npayloadObj.deviceId   = msg.deviceId;\npayloadObj.eventType  = msg.eventType;\n\nmsg.payload = payloadObj ; \n\nif (payloadObj.eventType ==='gps'){\n    return [msg, null] ;\n} else {\n    return [null, msg] ;\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 478.33331298828125,
+        "y": 100.44444274902344,
+        "wires": [
+            [
+                "8c040ef.5b16cf"
+            ],
+            [
+                "9f645e29.dba81"
+            ]
+        ]
+    },
+    {
+        "id": "9f645e29.dba81",
+        "type": "debug",
+        "z": "76cf0de5.045eb4",
+        "name": "JSON2",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 734.3333129882812,
+        "y": 140.44444274902344,
+        "wires": []
+    },
+    {
+        "id": "8c040ef.5b16cf",
+        "type": "debug",
+        "z": "76cf0de5.045eb4",
+        "name": "Json1",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 712.3333129882812,
+        "y": 44.44444274902344,
+        "wires": []
+    },
+    {
+        "id": "577e4618.6289b8",
+        "type": "inject",
+        "z": "76cf0de5.045eb4",
+        "name": "Start",
+        "topic": "",
+        "payload": "[    {       \"latitude\":30.398979,       \"longitude\":-97.746781,       \"speed\":0.0,       \"timestamp\":\"2017-03-25T13:43:16.000Z\"    },    {       \"latitude\":30.398981,       \"longitude\":-97.746804,       \"speed\":8.256416399999999,       \"timestamp\":\"2017-03-25T13:43:17.000Z\"    },    {       \"latitude\":30.398984,       \"longitude\":-97.746846,       \"speed\":14.5477296,       \"timestamp\":\"2017-03-25T13:43:18.000Z\"    },    {       \"latitude\":30.398987,       \"longitude\":-97.746895,       \"speed\":16.8379884,       \"timestamp\":\"2017-03-25T13:43:19.000Z\"    },    {       \"latitude\":30.398991,       \"longitude\":-97.746949,       \"speed\":18.8005212,       \"timestamp\":\"2017-03-25T13:43:20.000Z\"    },    {       \"latitude\":30.398994,       \"longitude\":-97.746999,       \"speed\":17.4106152,       \"timestamp\":\"2017-03-25T13:43:21.000Z\"    },    {       \"latitude\":30.398998,       \"longitude\":-97.747053,       \"speed\":18.6083532,       \"timestamp\":\"2017-03-25T13:43:22.000Z\"    },    {       \"latitude\":30.399,       \"longitude\":-97.747106,       \"speed\":18.351255600000002,       \"timestamp\":\"2017-03-25T13:43:23.000Z\"    },    {       \"latitude\":30.398988,       \"longitude\":-97.747147,       \"speed\":15.573322800000001,       \"timestamp\":\"2017-03-25T13:43:24.000Z\"    },    {       \"latitude\":30.398946,       \"longitude\":-97.747167,       \"speed\":18.714527999999998,       \"timestamp\":\"2017-03-25T13:43:25.000Z\"    },    {       \"latitude\":30.398897,       \"longitude\":-97.747171,       \"speed\":19.288666799999998,       \"timestamp\":\"2017-03-25T13:43:26.000Z\"    },    {       \"latitude\":30.398862,       \"longitude\":-97.747175,       \"speed\":14.1801192,       \"timestamp\":\"2017-03-25T13:43:27.000Z\"    },    {       \"latitude\":30.39883,       \"longitude\":-97.747202,       \"speed\":17.7606468,       \"timestamp\":\"2017-03-25T13:43:28.000Z\"    },    {       \"latitude\":30.398833,       \"longitude\":-97.747249,       \"speed\":16.3493028,       \"timestamp\":\"2017-03-25T13:43:29.000Z\"    },    {       \"latitude\":30.398837,       \"longitude\":-97.747305,       \"speed\":19.2106152,       \"timestamp\":\"2017-03-25T13:43:30.000Z\"    },    {       \"latitude\":30.398841,       \"longitude\":-97.747355,       \"speed\":17.395794,       \"timestamp\":\"2017-03-25T13:43:31.000Z\"    },    {       \"latitude\":30.398844,       \"longitude\":-97.747407,       \"speed\":18.0763704,       \"timestamp\":\"2017-03-25T13:43:32.000Z\"    },    {       \"latitude\":30.398848,       \"longitude\":-97.74745,       \"speed\":14.8483044,       \"timestamp\":\"2017-03-25T13:43:33.000Z\"    },    {       \"latitude\":30.398852,       \"longitude\":-97.747506,       \"speed\":19.380661200000002,       \"timestamp\":\"2017-03-25T13:43:34.000Z\"    },    {       \"latitude\":30.398856,       \"longitude\":-97.747555,       \"speed\":17.029328399999997,       \"timestamp\":\"2017-03-25T13:43:35.000Z\"    },    {       \"latitude\":30.398859,       \"longitude\":-97.747605,       \"speed\":17.479083600000003,       \"timestamp\":\"2017-03-25T13:43:36.000Z\"    },    {       \"latitude\":30.398862,       \"longitude\":-97.747645,       \"speed\":13.8968388,       \"timestamp\":\"2017-03-25T13:43:37.000Z\"    },    {       \"latitude\":30.398866,       \"longitude\":-97.747695,       \"speed\":17.4079116,       \"timestamp\":\"2017-03-25T13:43:38.000Z\"    },    {       \"latitude\":30.398869,       \"longitude\":-97.74774,       \"speed\":15.425287200000001,       \"timestamp\":\"2017-03-25T13:43:39.000Z\"    },    {       \"latitude\":30.398874,       \"longitude\":-97.747797,       \"speed\":19.958889600000003,       \"timestamp\":\"2017-03-25T13:43:40.000Z\"    },    {       \"latitude\":30.398888,       \"longitude\":-97.747843,       \"speed\":16.8280632,       \"timestamp\":\"2017-03-25T13:43:41.000Z\"    },    {       \"latitude\":30.398902,       \"longitude\":-97.747889,       \"speed\":16.854084,       \"timestamp\":\"2017-03-25T13:43:42.000Z\"    },    {       \"latitude\":30.398918,       \"longitude\":-97.74794,       \"speed\":18.8660268,       \"timestamp\":\"2017-03-25T13:43:43.000Z\"    },    {       \"latitude\":30.398932,       \"longitude\":-97.747983,       \"speed\":15.860203199999997,       \"timestamp\":\"2017-03-25T13:43:44.000Z\"    },    {       \"latitude\":30.398945,       \"longitude\":-97.748026,       \"speed\":15.638140799999999,       \"timestamp\":\"2017-03-25T13:43:45.000Z\"    },    {       \"latitude\":30.398957,       \"longitude\":-97.748076,       \"speed\":18.1951596,       \"timestamp\":\"2017-03-25T13:43:46.000Z\"    },    {       \"latitude\":30.398965,       \"longitude\":-97.748122,       \"speed\":16.0858188,       \"timestamp\":\"2017-03-25T13:43:47.000Z\"    },    {       \"latitude\":30.398969,       \"longitude\":-97.748177,       \"speed\":19.2776508,       \"timestamp\":\"2017-03-25T13:43:48.000Z\"    },    {       \"latitude\":30.398971,       \"longitude\":-97.748224,       \"speed\":16.203913200000002,       \"timestamp\":\"2017-03-25T13:43:49.000Z\"    },    {       \"latitude\":30.398973,       \"longitude\":-97.748276,       \"speed\":18.0975924,       \"timestamp\":\"2017-03-25T13:43:50.000Z\"    },    {       \"latitude\":30.398975,       \"longitude\":-97.748334,       \"speed\":19.902877200000002,       \"timestamp\":\"2017-03-25T13:43:51.000Z\"    },    {       \"latitude\":30.398976,       \"longitude\":-97.748382,       \"speed\":16.6319028,       \"timestamp\":\"2017-03-25T13:43:52.000Z\"    },    {       \"latitude\":30.398978,       \"longitude\":-97.748427,       \"speed\":15.811099200000001,       \"timestamp\":\"2017-03-25T13:43:53.000Z\"    },    {       \"latitude\":30.39898,       \"longitude\":-97.748482,       \"speed\":18.851079600000002,       \"timestamp\":\"2017-03-25T13:43:54.000Z\"    },    {       \"latitude\":30.398982,       \"longitude\":-97.748539,       \"speed\":19.9186884,       \"timestamp\":\"2017-03-25T13:43:55.000Z\"    },    {       \"latitude\":30.398984,       \"longitude\":-97.748587,       \"speed\":16.4305548,       \"timestamp\":\"2017-03-25T13:43:56.000Z\"    },    {       \"latitude\":30.398985,       \"longitude\":-97.748635,       \"speed\":16.5159,       \"timestamp\":\"2017-03-25T13:43:57.000Z\"    },    {       \"latitude\":30.398987,       \"longitude\":-97.74868,       \"speed\":15.620691600000002,       \"timestamp\":\"2017-03-25T13:43:58.000Z\"    },    {       \"latitude\":30.398988,       \"longitude\":-97.748728,       \"speed\":16.840778399999998,       \"timestamp\":\"2017-03-25T13:43:59.000Z\"    },    {       \"latitude\":30.39899,       \"longitude\":-97.748786,       \"speed\":19.7626752,       \"timestamp\":\"2017-03-25T13:44:00.000Z\"    },    {       \"latitude\":30.398992,       \"longitude\":-97.748823,       \"speed\":12.9610728,       \"timestamp\":\"2017-03-25T13:44:01.000Z\"    },    {       \"latitude\":30.398994,       \"longitude\":-97.748876,       \"speed\":18.48294,       \"timestamp\":\"2017-03-25T13:44:02.000Z\"    },    {       \"latitude\":30.398995,       \"longitude\":-97.748927,       \"speed\":17.5806684,       \"timestamp\":\"2017-03-25T13:44:03.000Z\"    },    {       \"latitude\":30.398997,       \"longitude\":-97.748976,       \"speed\":16.72407,       \"timestamp\":\"2017-03-25T13:44:04.000Z\"    },    {       \"latitude\":30.398999,       \"longitude\":-97.74902,       \"speed\":15.432044399999999,       \"timestamp\":\"2017-03-25T13:44:05.000Z\"    },    {       \"latitude\":30.398996,       \"longitude\":-97.749068,       \"speed\":16.7860224,       \"timestamp\":\"2017-03-25T13:44:06.000Z\"    },    {       \"latitude\":30.398989,       \"longitude\":-97.749122,       \"speed\":18.892281599999997,       \"timestamp\":\"2017-03-25T13:44:07.000Z\"    },    {       \"latitude\":30.398975,       \"longitude\":-97.749167,       \"speed\":16.613956800000004,       \"timestamp\":\"2017-03-25T13:44:08.000Z\"    },    {       \"latitude\":30.398957,       \"longitude\":-97.749218,       \"speed\":19.0725768,       \"timestamp\":\"2017-03-25T13:44:09.000Z\"    },    {       \"latitude\":30.398942,       \"longitude\":-97.749261,       \"speed\":16.0701804,       \"timestamp\":\"2017-03-25T13:44:10.000Z\"    },    {       \"latitude\":30.398928,       \"longitude\":-97.749299,       \"speed\":14.102211599999999,       \"timestamp\":\"2017-03-25T13:44:11.000Z\"    },    {       \"latitude\":30.398927,       \"longitude\":-97.749354,       \"speed\":19.234583999999998,       \"timestamp\":\"2017-03-25T13:44:12.000Z\"    },    {       \"latitude\":30.398938,       \"longitude\":-97.749403,       \"speed\":17.8355088,       \"timestamp\":\"2017-03-25T13:44:13.000Z\"    },    {       \"latitude\":30.398953,       \"longitude\":-97.749447,       \"speed\":16.1904996,       \"timestamp\":\"2017-03-25T13:44:14.000Z\"    },    {       \"latitude\":30.398969,       \"longitude\":-97.749495,       \"speed\":17.8812828,       \"timestamp\":\"2017-03-25T13:44:15.000Z\"    },    {       \"latitude\":30.398982,       \"longitude\":-97.749532,       \"speed\":13.864734,       \"timestamp\":\"2017-03-25T13:44:16.000Z\"    },    {       \"latitude\":30.398992,       \"longitude\":-97.749575,       \"speed\":15.557086799999997,       \"timestamp\":\"2017-03-25T13:44:17.000Z\"    },    {       \"latitude\":30.398958,       \"longitude\":-97.749629,       \"speed\":24.5014884,       \"timestamp\":\"2017-03-25T13:44:18.000Z\"    },    {       \"latitude\":30.398884,       \"longitude\":-97.749661,       \"speed\":31.8891348,       \"timestamp\":\"2017-03-25T13:44:19.000Z\"    },    {       \"latitude\":30.398795,       \"longitude\":-97.749698,       \"speed\":37.522742400000006,       \"timestamp\":\"2017-03-25T13:44:20.000Z\"    },    {       \"latitude\":30.398686,       \"longitude\":-97.749742,       \"speed\":46.1055096,       \"timestamp\":\"2017-03-25T13:44:21.000Z\"    },    {       \"latitude\":30.39856,       \"longitude\":-97.749791,       \"speed\":53.2243584,       \"timestamp\":\"2017-03-25T13:44:22.000Z\"    },    {       \"latitude\":30.398417,       \"longitude\":-97.749847,       \"speed\":60.0047028,       \"timestamp\":\"2017-03-25T13:44:23.000Z\"    },    {       \"latitude\":30.398262,       \"longitude\":-97.749888,       \"speed\":63.6670728,       \"timestamp\":\"2017-03-25T13:44:24.000Z\"    },    {       \"latitude\":30.398146,       \"longitude\":-97.749916,       \"speed\":47.467072800000004,       \"timestamp\":\"2017-03-25T13:44:25.000Z\"    },    {       \"latitude\":30.39808,       \"longitude\":-97.749962,       \"speed\":35.6318676,       \"timestamp\":\"2017-03-25T13:44:26.000Z\"    },    {       \"latitude\":30.398099,       \"longitude\":-97.750014,       \"speed\":19.4318676,       \"timestamp\":\"2017-03-25T13:44:27.000Z\"    },    {       \"latitude\":30.398119,       \"longitude\":-97.750066,       \"speed\":19.75599,       \"timestamp\":\"2017-03-25T13:44:28.000Z\"    },    {       \"latitude\":30.398136,       \"longitude\":-97.750111,       \"speed\":17.1626004,       \"timestamp\":\"2017-03-25T13:44:29.000Z\"    },    {       \"latitude\":30.398153,       \"longitude\":-97.750157,       \"speed\":17.339378399999998,       \"timestamp\":\"2017-03-25T13:44:30.000Z\"    },    {       \"latitude\":30.398169,       \"longitude\":-97.750198,       \"speed\":15.4372644,       \"timestamp\":\"2017-03-25T13:44:31.000Z\"    },    {       \"latitude\":30.398184,       \"longitude\":-97.750239,       \"speed\":15.409515599999997,       \"timestamp\":\"2017-03-25T13:44:32.000Z\"    },    {       \"latitude\":30.398204,       \"longitude\":-97.750291,       \"speed\":19.6129836,       \"timestamp\":\"2017-03-25T13:44:33.000Z\"    },    {       \"latitude\":30.398221,       \"longitude\":-97.750338,       \"speed\":17.524760399999998,       \"timestamp\":\"2017-03-25T13:44:34.000Z\"    },    {       \"latitude\":30.398238,       \"longitude\":-97.750387,       \"speed\":18.303271199999998,       \"timestamp\":\"2017-03-25T13:44:35.000Z\"    },    {       \"latitude\":30.398255,       \"longitude\":-97.750434,       \"speed\":17.6212044,       \"timestamp\":\"2017-03-25T13:44:36.000Z\"    },    {       \"latitude\":30.398272,       \"longitude\":-97.75048,       \"speed\":17.4201696,       \"timestamp\":\"2017-03-25T13:44:37.000Z\"    },    {       \"latitude\":30.398287,       \"longitude\":-97.750523,       \"speed\":16.0581204,       \"timestamp\":\"2017-03-25T13:44:38.000Z\"    },    {       \"latitude\":30.398306,       \"longitude\":-97.750576,       \"speed\":19.936029599999998,       \"timestamp\":\"2017-03-25T13:44:39.000Z\"    },    {       \"latitude\":30.398324,       \"longitude\":-97.750625,       \"speed\":18.012517199999998,       \"timestamp\":\"2017-03-25T13:44:40.000Z\"    },    {       \"latitude\":30.398342,       \"longitude\":-97.750677,       \"speed\":19.463709599999998,       \"timestamp\":\"2017-03-25T13:44:41.000Z\"    },    {       \"latitude\":30.398358,       \"longitude\":-97.750721,       \"speed\":16.8364512,       \"timestamp\":\"2017-03-25T13:44:42.000Z\"    },    {       \"latitude\":30.398375,       \"longitude\":-97.750769,       \"speed\":17.8521588,       \"timestamp\":\"2017-03-25T13:44:43.000Z\"    },    {       \"latitude\":30.398394,       \"longitude\":-97.750822,       \"speed\":19.6046784,       \"timestamp\":\"2017-03-25T13:44:44.000Z\"    },    {       \"latitude\":30.398409,       \"longitude\":-97.750863,       \"speed\":15.50727,       \"timestamp\":\"2017-03-25T13:44:45.000Z\"    },    {       \"latitude\":30.398428,       \"longitude\":-97.750916,       \"speed\":19.999148400000003,       \"timestamp\":\"2017-03-25T13:44:46.000Z\"    },    {       \"latitude\":30.398446,       \"longitude\":-97.750968,       \"speed\":19.335708,       \"timestamp\":\"2017-03-25T13:44:47.000Z\"    },    {       \"latitude\":30.398462,       \"longitude\":-97.75101,       \"speed\":15.8038128,       \"timestamp\":\"2017-03-25T13:44:48.000Z\"    },    {       \"latitude\":30.398474,       \"longitude\":-97.75106,       \"speed\":17.89524,       \"timestamp\":\"2017-03-25T13:44:49.000Z\"    },    {       \"latitude\":30.398456,       \"longitude\":-97.751104,       \"speed\":17.6019516,       \"timestamp\":\"2017-03-25T13:44:50.000Z\"    },    {       \"latitude\":30.398414,       \"longitude\":-97.751131,       \"speed\":19.205600399999998,       \"timestamp\":\"2017-03-25T13:44:51.000Z\"    },    {       \"latitude\":30.398374,       \"longitude\":-97.751155,       \"speed\":18.0951372,       \"timestamp\":\"2017-03-25T13:44:52.000Z\"    },    {       \"latitude\":30.398343,       \"longitude\":-97.751196,       \"speed\":19.319756400000003,       \"timestamp\":\"2017-03-25T13:44:53.000Z\"    },    {       \"latitude\":30.398329,       \"longitude\":-97.751244,       \"speed\":17.443728000000004,       \"timestamp\":\"2017-03-25T13:44:54.000Z\"    },    {       \"latitude\":30.398315,       \"longitude\":-97.751294,       \"speed\":18.252899999999997,       \"timestamp\":\"2017-03-25T13:44:55.000Z\"    },    {       \"latitude\":30.398306,       \"longitude\":-97.751327,       \"speed\":11.7919188,       \"timestamp\":\"2017-03-25T13:44:56.000Z\"    },    {       \"latitude\":30.398279,       \"longitude\":-97.751345,       \"speed\":15.673284,       \"timestamp\":\"2017-03-25T13:44:57.000Z\"    },    {       \"latitude\":30.398284,       \"longitude\":-97.751293,       \"speed\":18.886482,       \"timestamp\":\"2017-03-25T13:44:58.000Z\"    },    {       \"latitude\":30.398296,       \"longitude\":-97.751251,       \"speed\":15.358690799999998,       \"timestamp\":\"2017-03-25T13:44:59.000Z\"    },    {       \"latitude\":30.398309,       \"longitude\":-97.751205,       \"speed\":16.5448476,       \"timestamp\":\"2017-03-25T13:45:00.000Z\"    } ]",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 183.33331298828125,
+        "y": 589.4444427490234,
+        "wires": [
+            [
+                "39a8d771.ab1848",
+                "ed7e6d59.c9adf"
+            ]
+        ]
+    },
+    {
+        "id": "1d717a1c.b637d6",
+        "type": "ibmiot out",
+        "z": "76cf0de5.045eb4",
+        "authentication": "apiKey",
+        "apiKey": "2c9fa98c.8e9f26",
+        "outputType": "evt",
+        "deviceId": "vehicle-sample",
+        "deviceType": "OBD2",
+        "eventCommandType": "gps",
+        "format": "json",
+        "data": "msg",
+        "qos": 0,
+        "name": "IBM IoT for Dev space",
+        "service": "registered",
+        "x": 823.3333129882812,
+        "y": 527.4444427490234,
+        "wires": []
+    },
+    {
+        "id": "980deb56.ed3ff8",
+        "type": "debug",
+        "z": "76cf0de5.045eb4",
+        "name": "Current Data",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 705.8333129882812,
+        "y": 664.4444427490234,
+        "wires": []
+    },
+    {
+        "id": "39a8d771.ab1848",
+        "type": "debug",
+        "z": "76cf0de5.045eb4",
+        "name": "Probe Data",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 360.33331298828125,
+        "y": 656.4444427490234,
+        "wires": []
+    },
+    {
+        "id": "ed7e6d59.c9adf",
+        "type": "function",
+        "z": "76cf0de5.045eb4",
+        "name": "Send a lot of data",
+        "func": "for (var i = 0; i < msg.payload.length; i++) {\n    node.send({payload:{d:msg.payload[i]}});\n    \n}\nvar current = 0\nfunction sendData() {\n    if (current < msg.payload.length) {\n        node.send({payload:{d:msg.payload[current]}});\n        current += 1;\n    } else {\n        clearInterval(sendInterval)\n    }\n}\nsendInterval = setInterval(sendData, 1000)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 439.83331298828125,
+        "y": 526.4444427490234,
+        "wires": [
+            [
+                "980deb56.ed3ff8",
+                "1d717a1c.b637d6"
+            ]
+        ]
+    }
+]

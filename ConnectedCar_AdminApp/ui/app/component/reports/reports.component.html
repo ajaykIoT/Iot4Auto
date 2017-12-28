@@ -1,0 +1,140 @@
+<section class="col-md-12 col-xs-12 report-widget-container nopadding" ng-init="retrieveTripDetails()">
+
+    <article class="col-md-12 col-xs-12 dashboard-heading" >
+        <section class="col-md-9 col-xs-9 no-padding">
+            <span class="heading-title">Reports</span>
+        </section>
+
+    </article>
+
+    
+    <article class="col-md-12 col-xs-12">
+        <article class="col-md-12 col-xs-12 rpt-live-selectcontainer">
+                
+        <!--<article class="col-md-2 col-xs-12 reports-inline-display nopadding">
+            <span class="col-md-4  col-xs-4 filter-label">Last</span>
+            <select class="col-md-4  col-xs-2 live-select-style">
+                    <option value="6" selected>06</option>
+            </select>
+            <span class="col-md-4 col-xs-6 filter-label">Trips</span>                      
+        </article>-->
+        
+        <article class="col-md-3 col-xs-6">
+	            <select class="live-select-style" ng-model="tripId" ng-change="">
+	                    <option ng-repeat="option in tripIdList" value="{{option.trip_id}}" selected>{{option.trip_id}}</option>	                    
+	            </select>
+        </article>
+
+        
+         
+        <article class="col-md-2 col-xs-6">
+            <button class="live-btn" ng-click="getSelectedTripIdDetails()">Apply Filter</button>
+        </article>
+
+        </article>
+
+        
+    </article>
+
+     <article class="col-md-12 col-xs-12 ">
+        <article class="col-md-12 col-xs-12 report-userContainer">
+            <article class="col-md-1 col-xs-2">
+                <img class="driverPic" src="../../app/assets/images/topBar/icon_user.png" />
+            </article>
+            
+            <article class="col-md-4 col-xs-10">
+	            <article class="col-md-6 col-xs-9">
+	                <span class="col-md-12 col-xs-12 user-heading-label hidden-xs">Name</span>
+	                <span class="col-md-12 col-xs-12 user-detail-label">{{driverName}}</span>
+	            </article>
+	            
+	            <article class="col-md-6 col-xs-9">
+	                <span class="col-md-12 col-xs-12 user-heading-label hidden-xs">Device ID</span>
+	                <span class="col-md-12 col-xs-12 user-detail-label">{{deviceId}}</span>
+	            </article>
+            </article>
+
+			<article class="col-md-4 col-xs-12 nopadding">
+	            <article class="col-md-6 col-xs-6 nopadding">
+	                <span class="col-md-12 col-xs-12 user-heading-label">Car Name</span>
+	                <span class="col-md-12 col-xs-12 user-detail-label">{{driverLicenseNo}}</span>
+	            </article>            
+	
+	            <article class="col-md-6 col-xs-6 nopadding">
+	                <span class="col-md-12 col-xs-12 user-heading-label">Total Trips Made</span>
+	                <span class="col-md-12 col-xs-12 user-detail-label" ng-class="{'hideElement': isLoadingReportDetails}">{{allTripsDetails.length}}</span>
+	            </article>
+            </article>
+ 
+        </article>
+  	</article>
+  
+  	<article class="col-md-12 col-xs-12 ">
+  		<article class="col-md-12 col-xs-12 trip-info-container">
+  			<article class="col-md-12 col-xs-12 trip-location-title">
+				  {{tripId}}
+  			</article>
+  			
+  			<article class="col-md-12 col-xs-12">
+	  			<article class="col-md-6 col-xs-12 nopadding reportMapContainer">
+	  				<section ng-if="mapData.featureCoordinates.length > 0" class="col-md-12 col-xs-12 nopadding" ng-include="'app/widget/map/reportMap.widget.html'"></section>
+	  			</article>
+	  			
+	  			<article class="col-md-6 col-xs-12 trip-detail-container">
+	  				<article class="col-md-12 col-xs-12 nopadding">
+	  					<article class="col-md-3 col-xs-12 nopadding">Trip Details:</article>
+	  				</article>
+	  				
+	  				<article class="col-md-12 col-xs-12 nopadding">
+	  					<article class="col-md-3 col-xs-6 nopadding">
+                			<span class="col-md-12 col-xs-12 trip-detail-heading-label nopadding">Start Time</span>
+                			<span class="col-md-12 col-xs-12 trip-detail-content-label nopadding" ng-class="{'hideElement': isLoadingReportDetails}">{{singleTripDetails.START_TIME | date:'hh:mm:ss '}}</span>
+            			</article>
+            			<article class="col-md-3 col-xs-6 nopadding">
+                			<span class="col-md-12 col-xs-12 trip-detail-heading-label nopadding">End Time</span>
+                			<span class="col-md-12 col-xs-12 trip-detail-content-label nopadding" ng-class="{'hideElement': isLoadingReportDetails}">{{singleTripDetails.END_TIME | date:'hh:mm:ss '}}</span>
+            			</article>
+            			<article class="col-md-3 col-xs-6 nopadding">
+                			<span class="col-md-12 col-xs-12 trip-detail-heading-label nopadding">Start Point</span>
+                			<span class="col-md-12 col-xs-12 trip-detail-content-label nopadding" ng-class="{'hideElement': isLoadingReportDetails}">{{start_point}}</span>
+            			</article>
+            			<article class="col-md-3 col-xs-6 nopadding">
+                			<span class="col-md-12 col-xs-12 trip-detail-heading-label nopadding">End Point</span>
+                			<span class="col-md-12 col-xs-12 trip-detail-content-label nopadding" ng-class="{'hideElement': isLoadingReportDetails}">{{end_point}}</span>
+            			</article>
+	  				</article>
+	  				
+	  				<article class="col-md-12 col-xs-12 nopadding">
+	  					<article class="col-md-3 col-xs-6 nopadding">
+                			<span class="col-md-12 col-xs-12 trip-detail-heading-label nopadding">Avg. Speed</span>
+                			<span class="col-md-12 col-xs-12 trip-detail-content-label nopadding" ng-class="{'hideElement': isLoadingReportDetails}">{{avg_speed | number:2}} kms/hr</span>
+            			</article>
+            			<article class="col-md-3 col-xs-6 nopadding">
+                			<span class="col-md-12 col-xs-12 trip-detail-heading-label nopadding">Time Taken</span>
+                			<span class="col-md-12 col-xs-12 trip-detail-content-label nopadding" ng-class="{'hideElement': isLoadingReportDetails}">{{time_taken | msToTime}}</span>
+            			</article>
+	  				</article>
+	  				
+	  				
+	  				<article class="col-md-12 col-xs-12 trip-graph-container nopadding">
+	  					<article class="col-md-6 col-xs-12 nopadding">Speed and turn related driving details:</article>
+	  				</article>
+	  				
+	  				<article class="col-md-12 col-xs-12 nopadding">
+	  					<section class="col-md-12  col-xs-12 nopadding" ng-class="{'hideElement': isLoadingReportDetails}">
+	            			<section class="col-md-12 col-xs-12 nopadding" ng-if="speedAndTurnDetailData.length > 0" ng-include="'app/widget/barChart/barChart.widget.html'" ng-controller="BarChartController">
+	                		</section>
+        				</section>
+	  				</article>
+	  			</article> 
+  			</article> 			
+  		</article>  		  		
+  	</article>
+
+  	<!--<article class="col-md-12 col-xs-12 download-rpt-btn-container">
+  		<article class="col-md-12 col-xs-12 nopadding">
+            <button class="download-rpt-btn">Download Report</button>
+        </article>
+  	</article>-->
+
+</section>

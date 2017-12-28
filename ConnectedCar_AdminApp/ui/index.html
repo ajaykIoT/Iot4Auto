@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Connected Car App</title>
+	<base href="/">
+   	<meta charset="utf-8">
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+   	
+   	<!--build:css assets/css/app.min.css-->
+   	<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+   	<link rel="stylesheet" href="app/assets/css/style.css">
+   	<link rel="stylesheet" href="app/component/main.component.css">
+   	<link rel="stylesheet" type="text/css" href="app/component/login/login.component.css">
+   	<link rel="stylesheet" type="text/css" href="app/component/dashboard/dashboard.component.css">
+   	<link rel="stylesheet" type="text/css" href="app/component/liveTracking/liveTracking.component.css">
+   	<link rel="stylesheet" type="text/css" href="app/component/master/master.component.css">
+   	<link rel="stylesheet" type="text/css" href="app/component/registration/registration.component.css">
+   	<link rel="stylesheet" type="text/css" href="app/component/reports/reports.component.css">
+	<link rel="stylesheet" type="text/css" href="app/component/sim/simulator.component.css">
+	   
+   	
+   	<link rel="stylesheet" type="text/css" href="app/widget/topBar/topBar.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/bottomBar/bottomBar.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/donutChart/donutChart.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/driverDetail/driverDetail.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/leftNav/leftNav.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/lineChart/lineChart.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/map/map.widget.css">
+   	<link rel="stylesheet" type="text/css" href="app/widget/patchBox/patchBox.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/barChart/barChart.widget.css">
+   	<!-- endbuild -->
+    <!-- <link href="/app/assets/images/favicon.png" rel="icon" type="image/x-icon" /> -->
+    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
+   	<link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' /> -->
+   	
+   	<script src='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA88XzII7nHmlTUe_8zlr-ncZVvC3hkTNM"></script>
+	<script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+	<!--<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAN-kuf3wxeqkxXF6r6oZj8mK1dRILZTq0"></script>-->
+	
+</head>
+
+<body ng-app="cca" class="page-content">
+
+	<section ui-view></section>
+	
+	<!--build:js js/vendor.min.js -->
+	<script src="vendor/jquery/dist/jquery.min.js"></script>
+	<script src="vendor/angular/angular.min.js"></script>
+	<script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="vendor/angular-dialog-service/dist/dialogs.js"></script>
+	<script src="vendor/highcharts/highcharts.js"></script>
+	<script src="vendor/angular-cookies/angular-cookies.min.js"></script>
+	<script src="vendor/angular-websocket/dist/angular-websocket.min.js"></script>
+	<script src="vendor/moment/moment.js"></script>
+	<script src="vendor/angular-moment/angular-moment.js"></script>
+	<script src="vendor/moment/locale/de.js"></script>
+	<script src="vendor/ngstorage/ngStorage.min.js"></script>
+	<script src="vendor/underscore/underscore.js"></script>
+	<script src="vendor/angular-underscore-module/angular-underscore-module.js"></script>
+	
+	<!-- endbuild -->
+
+	<!--build:js js/app.min.js -->
+ 	<script src="app/app.module.js"></script>
+ 	<script src="app/app.config.js"></script>
+   	<script src="app/app.route.js"></script>
+   	<script src="app/app.run.js"></script>
+
+	<script src="app/component/login/login.component.js"></script>
+	<script src="app/component/main.component.js"></script>
+	<script src="app/component/liveTracking/liveTracking.component.js"></script>
+	<script src="app/component/reports/reports.component.js"></script>
+	<script src="app/component/master/master.component.js"></script>
+	<script src="app/component/sim/simulator.component.js"></script>
+	<script src="app/component/dashboard/dashboard.component.js"></script>
+	<script src="app/component/registration/registration.component.js"></script>
+
+	<script src="app/widget/topBar/topBar.widget.js"></script>
+	<script src="app/widget/bottomBar/bottomBar.widget.js"></script>
+	<script src="app/widget/leftNav/leftNav.widget.js"></script>
+	<script src="app/widget/patchBox/patchBox.widget.js"></script>
+	<script src="app/widget/map/map.widget.js"></script>
+	<script src="app/widget/lineChart/lineChart.widget.js"></script>
+	<script src="app/widget/donutChart/donutChart.widget.js"></script>
+	<script src="app/widget/topBar/topBar.widget.js"></script>
+	<script src="app/widget/driverDetail/driverDetail.widget.js"></script>
+	<script src="app/widget/barChart/barChart.widget.js"></script>
+
+	
+	<!--<script src="app/widget/lineChart/lineChart.widget.js"></script>
+	<script src="app/widget/map/map.widget.js"></script>
+	<script src="app/widget/lineChart/lineChart.widget.js"></script>
+	<script src="app/widget/barChartMonitor/barChartMonitor.widget.js"></script>
+	<script src="app/widget/table/table.widget.js"></script>
+	<script src="app/widget/progressBar/progressBar.widget.js"></script>
+	<script src="app/widget/donutChart/donutChart.widget.js"></script>
+	<script src="app/widget/timeSeries/timeSeries.widget.js"></script>
+	-->
+	<script src="app/service/http/get.http.js"></script>
+    <script src="app/service/http/post.http.js"></script>
+    <script src="app/service/http/delete.http.js"></script>
+	
+    <!-- endbuild -->
+    
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<header class="col-md-12 col-xs-12 navbar-fixed-top nopadding " ng-include="'app/widget/topBar/topbarreg.html'"></header>
+
+<section class="row regbackground">
+	<article class="col-md-12 col-sm-12 col-xs-12 reg-heading  hidden-xs hidden-sm ">
+        <section class="col-md-9  col-sm-12 col-xs-12 no-padding">
+            <span class="heading-title mobile-heading ">Registration</span>
+        </section>
+
+    </article>
+
+	<article class="col-md-12 col-sm-12 col-xs-12 form-container">
+	<form novalidate name="regForm" class="col-md-5 col-md-offset-5 col-sm-12 col-xs-12 regContainer">
+		
+		<article class="col-md-12 col-sm-12 col-xs-12 Details-container">
+			    <span class="reg-form-title">User Details</span>  
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="text" placeholder="First_name" ng-model="regForm.FIRST_NAME" ng-pattern="/.*[a-zA-Z]+.*/"  required>	  
+				</article>
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="text" placeholder="Last_name" ng-model="regForm.LAST_NAME" ng-pattern="/.*[a-zA-Z]+.*/" required>
+				</article>
+				
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="email" placeholder="Email" ng-model="regForm.EMAIL" required>
+				</article>
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="text" placeholder="Phone Number"  ng-model="regForm.MOBILE_NO"   required>
+				</article>
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="text" placeholder="Username" ng-model="regForm.USERNAME" ng-pattern="/.*[a-zA-Z]+.*/" required>
+				</article>
+				<article class="col-md-12  col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12  col-sm-12 col-xs-12 input-field" type="password" placeholder="Password" ng-model="regForm.PASSWORD" required>
+				</article>
+				
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					
+					<select class="col-md-12 col-sm-12 col-xs-12 input-field" ng-model="regForm.GENDER" required>
+							<option value="" selected>Gender</option>
+                    		<option value="MALE">Male</option>
+							<option value="FEMALE">Female</option>
+                    </select>
+				</article>
+		</article> 	
+		<article class="col-md-12 col-sm-12 col-xs-12 Details-container">
+			    <span class="reg-form-title">Device Details</span>  
+				<article class="col-md-12  col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="text" placeholder="Device_Id" ng-model="regForm.MO_ID" required>
+				</article>
+				<article class="col-md-12  col-sm-12 col-xs-12 no-padding field-container">
+					<input class="col-md-12 col-sm-12 col-xs-12 input-field" type="text" placeholder="Car Name" ng-model="regForm.CAR_NAME"   required>
+				</article>
+				<article class="col-md-12 col-sm-12 col-xs-12 no-padding field-container">
+					
+					<select class="col-md-12 col-sm-12 col-xs-12 input-field" ng-model="regForm.MO_TYPE" required>
+							<option value="" selected>Device Type</option>
+                    		<option value="vehicles">vehicles</option>
+                    </select>
+				</article>	
+		</article> 
+
+		<section class="col-md-12 col-sm-12 col-xs-12 button-container">
+				<section class="col-sm-12 col-xs-12  Regbtn">
+					<button  class="col-sm-6 col-xs-6 btn btn-lg btn-block Regbtn_size cancelbtncolor" ng-click="clearDetails()">Cancel</button>
+					<button  class="col-sm-6 col-xs-6 btn btn-lg btn-block Regbtn_size submitbtncolor" ng-class="{'disableBtn':regForm.$invalid}"    ng-click="submitDetails()">Submit</button>
+				</section>
+
+		</section>
+
+		
+
+	</form>
+	</article>
+		<section class="cca-2017">
+	<article class="col-md-12 cca-2017-footer hidden-xs hidden-sm ">
+		<h5 class="text-center cca-2017-text">  &copy 2017 Persistent Systems. All Rights Reserved. This software is confidential and proprietary information of Persistent.
+		</h5>
+		
+	</article>
+</section>
+</section>

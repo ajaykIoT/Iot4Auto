@@ -1,0 +1,7 @@
+.nopadding {
+	padding: 0;
+}
+
+.page-content {
+	overflow-y:scroll;
+}

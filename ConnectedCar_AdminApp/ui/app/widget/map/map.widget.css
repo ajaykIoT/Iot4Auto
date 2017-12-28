@@ -1,0 +1,199 @@
+/* .mapContainer {
+	height: 100%;
+}
+
+.map-style {
+	height: 79%;
+	border: 1px solid #D9D9D9;
+	margin-top: 25px;
+}
+ */
+ 
+.marker{
+	background-image: url("../../assets/images/map/icon_car.png");
+	width: 38px;
+	height: 17px;
+	cursor: pointer;
+	background-repeat: no-repeat;
+}
+
+.pinMarker{
+	background-image: url(../../assets/images/map/pin.png);
+    width: 25px;
+    height: 29px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+}
+ 
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl{margin: 40px 10px 0 0!important ;}
+.popUpContainer{
+    
+    color: #cecece;
+    line-height: 12px;  
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip{border-top-color: #435061;}
+.mapboxgl-popup-content{
+    background: #435061;
+}
+.mapContainer {
+	 height: 520px;
+    
+}
+
+.map-style {
+	height:100%;
+}
+
+.map-input{
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.map-select-style{
+	padding: 5px;
+    margin-right: 10px !important;
+    color: #9e9e9e;
+    width: 13% !important;
+	font-size: 12px;
+    border: 1px solid #d7d7d7;
+}
+.form-control{
+     border: 1px solid #d7d7d7;
+    border-radius: 0px;
+    height: 30px;
+}
+.bg-search{
+    
+        padding-left: 3px;
+    padding-top: 4px;
+    padding-right: 3px;
+    position: absolute;
+    z-index: 222;
+   background: url(../../assets/images/dashboard/bg-search.png)
+}
+.bg-search-bottom{
+    
+            padding-left: 3px;
+    padding-top: 0px;
+    padding-right: 3px;
+    position: absolute;
+    top: 275px;
+    z-index: 222;
+    opacity: .9;
+   background: url(../../assets/images/dashboard/bg-search.png)
+}
+.btn{
+    border-radius: 0px;
+    border: 0px;
+    margin-top: -2px;
+    padding: 5px 15px;
+}
+
+.map-button{
+	padding-top: 2px;
+	position: absolute;
+    width: 50%;
+}
+
+.map-selectbtn{
+	padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.mapgreen{
+	 background-color: #44c948;
+}
+
+.mapred{
+	 background-color: red;
+     ;
+}
+
+.mapblue{
+	 background-color: #7bd0f7;
+}
+
+.maplightgray{
+	 background-color: #d8dcdc;
+}
+
+.mapvoilet{
+     background-color: #8a66c9;
+}
+
+.mapgray{
+	 background-color: #babdbd;
+}
+
+.maporange{
+	 background-color: #f9c880;
+}
+
+.map-ajax-loader {
+    position: absolute;
+    left: 44%;
+    top: 25%;
+    display: block; 
+    height: 150px;
+    width: 150px;    
+}
+
+
+.map_opacity{
+    opacity: 0.2;
+    background-color: black;
+}
+
+.loader-text{
+	font-size: 12px;
+	color: blue;
+}
+
+.mapbtn-container{
+  display: block;
+}
+
+.map-button{
+    display: none;
+}    
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+@media only screen and (max-device-width: 768px) {
+    .map-button{
+        display: block;
+        left:0%;
+        width: 100%;
+        padding-top: 10px;
+    }
+
+    .mapbtn-container{
+        background-color: #F13D3E;
+        z-index: 999;
+	    height: 50px;
+        bottom: 0;
+        position: fixed;
+    }
+
+    .mapBoxContainer .mapContainer {
+         height: calc(100% - 255px);
+         position: fixed;
+    }
+    
+    .map-trip-btn{
+        font-size: 20px;
+        font-weight: normal;
+        padding-left: 5px;
+        color: white;
+    }    
+}
+
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+    .mapContainer {
+        height: 774px;
+    }
+}

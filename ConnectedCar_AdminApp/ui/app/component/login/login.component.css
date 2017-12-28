@@ -1,0 +1,341 @@
+/*
+ * Specific styles of signin component
+ */
+/*
+ * General styles
+ */
+body {
+	background-color: lightgray;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	/* width:100%;
+	height:100%; */
+    overflow:hidden;
+}
+
+.inline-display{
+    display: inline-flex;
+    position:relative;
+    bottom:90px;
+}
+
+.card-container.card {
+    max-width: 350px;
+    padding: 40px 40px;
+	height: 400px;
+	background-color: white;
+    border: 1px solid lightgrey;
+    position: relative;
+    top:50px;
+    
+   
+}
+.terms-conditon{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.terms{
+    color: #F13D3E;
+    
+}
+
+.checkboxlabel{
+    font-size: smaller;
+}
+
+.terms:hover {
+    color: #F13D3E !important;
+    text-decoration: underline;
+    outline: none !important;
+}
+
+.terms:visited, terms:focus, terms:active{
+    outline: none !important;
+    color: #F13D3E !important;
+}
+
+.btn {
+    font-weight: 700;
+    height: 36px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+  
+}
+
+.loginbtn[disabled] {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: #CDC5C3 !important;
+}
+
+/*
+ * Card component
+ */
+.card {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+    /*width: 150px;*/
+    height: 150px;
+    margin: 0 auto 10px;
+    display: block;
+    /*-moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;*/
+	position:relative;
+	bottom:100px;
+    padding: 15px;
+	}
+
+.persistent-img-card{
+    /*width: 100px;*/
+    height: 65px;
+    display: block;	
+}
+
+/*
+ * Form styles
+ */
+.profile-name-card {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+	
+}
+
+input:-webkit-autofill{
+    background-color:white !important;
+}
+
+
+
+  #headline1 {
+      background-image: url(icon_user.png);
+      background-repeat: no-repeat;
+      background-position: right bottom;
+      padding-top:68px;
+      margin-bottom:50px;
+   }
+
+
+
+
+.btn.btn-signin {
+    /*background-color: #4d90fe; */
+    background-color: #F13D3E;
+    /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    height:45px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+	position:relative;
+    bottom : 70px;
+}
+
+.btn.btn-signin:hover,
+.btn.btn-signin:active,
+.btn.btn-signin:focus {
+    /*background-color: rgb(78, 23, 33);*/
+   
+}
+
+
+.cca-2017{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+
+}
+
+
+.register
+{
+    position: relative;
+    bottom:60px;
+    left:50px;
+     font-weight: normal;
+     color:#F13D3E;
+}
+
+
+
+.cca-2017-footer {
+	background: white;
+	height: 45px;
+}
+
+.cca-2017-text{
+	color: black;
+    font-size: 12px;
+}
+
+
+.icon_user{
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    position: relative;
+    right:5px;
+}
+
+.checkbox
+{
+    position:relative;
+    bottom:85px;
+}
+.no-padding{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.input_text{
+    padding-top: 8px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 0px;
+    border: none;
+    height: 42px;
+    outline: none;
+    position: relative;
+    right:10px;
+}
+
+.field_border{
+    border-bottom: 1px solid black;
+   width: 100%;
+   margin-bottom: 10px !important;
+}
+
+.loginbtn{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.persistent-logo-pos{
+    position: absolute;
+    bottom: 55px;
+    left: 52px;
+}
+
+
+@media only screen and (max-device-width: 768px) {
+
+.persistent-logo-pos{
+      position: fixed;
+    bottom: 54px;
+    left: 0;
+    width: 200px;
+    padding: 0px 54px;
+}
+
+ .card-container.card {
+       top: 40px;
+    }
+
+}
+
+
+@media only screen and (max-device-width: 360px) {
+
+    .card-container.card {
+        height: 360px;
+        top: 15px;
+    }
+
+    .terms, .checkboxlabel {
+        font-size: x-small;
+    }
+    .profile-img-card {
+        /*width: 125px;*/
+        height: 125px;
+    }
+
+    .persistent-logo-pos {
+        margin-left: 20%;
+    }
+    .register{
+        bottom:70px;
+    }
+
+    .btn.btn-signin {
+       bottom: 80px;
+    }
+
+}
+
+
+@media only screen and (device-width: 360px) {
+
+.persistent-logo-pos{
+         position: fixed;
+    bottom: 64px;
+    left: 16px;
+    width: 200px;
+    padding: 0px 54px;
+}
+
+
+}
+
+
+
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  /* For portrait layouts only */
+
+    .ipad-offset{
+        margin-left: 37.333333%;
+    }
+
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  /* For portrait layouts only */
+
+    .ipad-offset{
+        margin-left: 39.666667%;
+
+    }
+
+}
+
+
+.hidden-xs /* phone */ 
+.hidden-sm /* phablet/tablet */
+.hidden-md /* browser */
+
+

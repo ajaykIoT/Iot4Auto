@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Connected Car App</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+	<link rel="stylesheet" href="vendor/components-font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+
+
+	<link rel="stylesheet" href="app/assets/css/style.css">
+	<link rel="stylesheet" href="app/component/main.component.css">
+	<link rel="stylesheet" type="text/css" href="app/component/login/login.component.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/patchBox/patchBox.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/component/liveTracking/liveTracking.component.css">
+	<link rel="stylesheet" type="text/css" href="app/component/registration/registration.component.css">
+	<link rel="stylesheet" type="text/css" href="app/component/reports/reports.component.css">
+	<link rel="stylesheet" type="text/css" href="app/component/sim/simulator.component.css">
+
+	<link rel="stylesheet" type="text/css" href="app/widget/topBar/topBar.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/bottomBar/bottomBar.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/donutChart/donutChart.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/driverDetail/driverDetail.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/leftNav/leftNav.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/lineChart/lineChart.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/map/map.widget.css">
+	<link rel="stylesheet" type="text/css" href="app/widget/barChart/barChart.widget.css">
+	<link href='https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+	<link rel="stylesheet" href="app/assets/css/bootstrap-material-design.min.css">
+	<link rel="stylesheet" href="app/assets/css/ripples.min.css">
+</head>
+
+<body ng-app="cca" class="page-content">
+	<div ui-view style="height:100%"></div>
+	<script src='https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+	<script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+	<script src="vendor/jquery/dist/jquery.min.js"></script>
+	<script src="vendor/angular/angular.min.js"></script>
+	<script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="vendor/angular-dialog-service/dist/dialogs.js"></script>
+	<script src="vendor/highcharts/highcharts.js"></script>
+	<script src="vendor/angular-cookies/angular-cookies.min.js"></script>
+	<script src="vendor/angular-websocket/dist/angular-websocket.min.js"></script>
+	<script src="vendor/moment/moment.js"></script>
+	<script src="vendor/angular-moment/angular-moment.js"></script>
+	<script src="vendor/moment/locale/de.js"></script>
+	<script src="vendor/ngstorage/ngStorage.min.js"></script>
+	<script src="vendor/underscore/underscore.js"></script>
+	<script src="vendor/angular-underscore-module/angular-underscore-module.js"></script>
+
+	<script src="app/app.module.js"></script>
+	<script src="app/app.config.js"></script>
+	<script src="app/app.route.js"></script>
+	<script src="app/app.run.js"></script>
+
+	<script src="app/component/login/login.component.js"></script>
+	<script src="app/component/main.component.js"></script>
+	<script src="app/component/liveTracking/liveTracking.component.js"></script>
+	<script src="app/component/reports/reports.component.js"></script>
+	<script src="app/component/sim/simulator.component.js"></script>
+	<script src="app/component/registration/registration.component.js"></script>
+
+	<script src="app/widget/topBar/topBar.widget.js"></script>
+	<script src="app/widget/bottomBar/bottomBar.widget.js"></script>
+	<script src="app/widget/leftNav/leftNav.widget.js"></script>
+	<script src="app/widget/patchBox/patchBox.widget.js"></script>
+	<script src="app/widget/map/map.widget.js"></script>
+	<script src="app/widget/lineChart/lineChart.widget.js"></script>
+	<script src="app/widget/donutChart/donutChart.widget.js"></script>
+	<script src="app/widget/topBar/topBar.widget.js"></script>
+	<script src="app/widget/driverDetail/driverDetail.widget.js"></script>
+	<script src="app/widget/barChart/barChart.widget.js"></script>
+
+
+	<!--<script src="app/widget/lineChart/lineChart.widget.js"></script>
+	<script src="app/widget/map/map.widget.js"></script>
+	<script src="app/widget/lineChart/lineChart.widget.js"></script>
+	<script src="app/widget/barChartMonitor/barChartMonitor.widget.js"></script>
+	<script src="app/widget/table/table.widget.js"></script>
+	<script src="app/widget/progressBar/progressBar.widget.js"></script>
+	<script src="app/widget/donutChart/donutChart.widget.js"></script>
+	<script src="app/widget/timeSeries/timeSeries.widget.js"></script>
+	-->
+	<script src="app/service/http/get.http.js"></script>
+	<script src="app/service/http/post.http.js"></script>
+	<script src="app/service/http/delete.http.js"></script>
+
+	<script src="vendor/highcharts/highcharts.js"></script>
+	<script src="vendor/highcharts/highcharts-more.js"></script>
+	<script src="vendor/highcharts/modules/solid-gauge.js"></script>
+
+	<script type="text/javascript" src="vendor/popper.js/dist/popper-utils.min.js"></script>
+	<script type="text/javascript" src="vendor/popper.js/dist/popper.min.js"></script>
+	<script type="text/javascript" src="app/assets/js/ripples.min.js"></script>
+	<script type="text/javascript" src="app/assets/js/material.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$.material.init();
+		});
+	</script>
+	<script src="https://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.js"></script>
+	<script>
+		$("#dropdown-menu select").dropdown();
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA88XzII7nHmlTUe_8zlr-ncZVvC3hkTNM&libraries=places"></script>
+</body>
+
+</html>

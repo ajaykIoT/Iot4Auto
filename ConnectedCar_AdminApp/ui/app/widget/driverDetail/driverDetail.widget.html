@@ -1,0 +1,58 @@
+<section class="driverDetail-widget" >
+	<p class="col-md-12 col-sm-12 col-xs-12 headerText realdata-heading">Real time Monitoring</p>
+	<!--<article class="col-md-12 no-padding">
+		<span class="driverDetail-heading">Real time Monitoring</span>
+	</article>	-->
+	<article class="col-md-12 col-sm-12 col-xs-12  driverDetails">
+       
+		<section>
+			<span class="col-md-12  col-sm-12 col-xs-12 speed-title no-padding">Trip details</span>
+			<article class="col-md-12 col-sm-12 col-xs-12 detail-cont no-padding">
+				
+				<article class="col-md-6 col-sm-6 col-xs-6  no-padding each-detail">
+					 <span class="col-md-12  col-sm-8 col-xs-7 heading-label">Time Travelled</span>
+               		 <span class="col-md-12  col-sm-4 col-xs-5 detail-label">{{realTimeData.timeConsumed}} min </span>	
+				</article>
+
+				<article class="col-md-6 col-sm-6 col-xs-6  no-padding each-detail">
+					 <span class="col-md-12 col-sm-8 col-xs-7  heading-label">Current Time</span>
+               		 <span class="col-md-12 col-sm-4 col-xs-5  detail-label">{{realTimeData.currentTime | date:'h:mma'}}</span>	
+				</article>
+
+				<article class="col-md-12  col-sm-12 col-xs-12  no-padding each-detail ">
+					 <span class="col-md-6  col-sm-4 col-xs-4  heading-label">Current Location</span>
+               		 <span class="col-md-6 col-sm-8 col-xs-8  detail-label">{{realTimeData.currentLocation}}</span>	
+				</article>
+
+				<article class="col-md-6 col-sm-6 col-xs-6 no-padding each-detail">
+					 <span class="col-md-12  col-sm-8 col-xs-7 heading-label">Current Speed</span>
+               		 <span class="col-md-12 col-sm-4 col-xs-5 detail-label">{{realTimeData.currentSpeed}} kms/hr</span>	
+				</article>
+
+				<article class="col-md-6 col-sm-6 col-xs-6  no-padding each-detail">
+					 <span class="col-md-12 col-sm-8 col-xs-7 heading-label">Distance Covered</span>
+               		 <span class="col-md-12 col-sm-4 col-xs-5 detail-label">{{realTimeData.distance | number: 2}} kms</span>	
+				</article>
+
+				<!-- <article class="col-md-6 col-sm-6 col-xs-6 no-padding each-detail">
+					 <span class="col-md-12 col-sm-8 col-xs-7 heading-label">Fuel Remaining</span>
+					<span class="col-md-12  col-sm-4 col-xs-5 detail-label">{{realTimeData.fuel_consumed}} ltrs</span>	
+				</article> -->
+
+				<!--<article class="col-md-6 col-sm-6 col-xs-6 no-padding each-detail">
+					 <span class="col-md-12 col-sm-8 col-xs-7 heading-label">Mileage Given</span>
+               		 <span class="col-md-12 col-sm-4 col-xs-5 detail-label">{{realTimeData.mileage}} km/ltr</span>	
+				</article>-->
+				
+				
+
+
+			</article>
+		</section>  
+
+		 
+
+    </article>
+	
+
+</section>

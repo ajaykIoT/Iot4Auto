@@ -1,0 +1,128 @@
+.patchbox{
+	height:85px;
+	margin-top: 10px;
+	/*padding-left:unset;*/
+}
+
+.panel,.panel-body{
+	height:100%;
+	margin-top: 0px;
+}
+
+.patchbox-icon{
+	height: 100%;
+	background-color:#E0E0E0;
+	padding-top:18.5px;
+	padding-bottom:18.5px;
+	text-align: center;
+}
+
+.patchbox-content{
+	height: 100%;
+
+}
+
+.ico{
+	font-size: 3rem;
+	color: #009688;
+}
+
+.patch-heading {
+	padding: 2px;
+	padding-left: unset;
+	font-weight: normal;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	font-size: 16px;
+}
+
+.patch-value{
+	display: inline-flex;
+	padding-left: unset;
+}
+
+.patch-count {
+	color: #333;
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-size: 30px;
+}
+
+.patch-unit{
+	font-size: 16px;
+  padding-top: 14px;
+	color: #333;
+	font-weight: bold;
+	padding-left: 5px;
+
+}
+
+.no-trip{
+	display: table;
+	height:530px;
+}
+
+.no-trip-inside{
+	display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.conf-trip{
+	padding-top:30px;
+	padding-left:30px;
+}
+
+.conf-trip-inside{
+}
+
+.live-trip{
+padding-left:30px;
+padding-right:30px;
+margin-top: 10px;
+}
+.wrapper{
+	padding: unset;
+	margin:unset;
+}
+
+.live-map{
+	height:480px;
+	background-color: white;
+	margin-top: 10px;
+	/*padding-left: 15px;*/
+	padding-left: unset;
+	padding-right: unset;
+}
+
+.live-stats{
+	margin-top: 10px;
+	padding-left: unset;
+	padding-right: unset;
+}
+
+.stats{
+	height: 163px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: unset;
+}
+.inside{
+	text-align: center;
+	background-color: white;
+	height: 100%;
+}
+
+.highcharts-yaxis-grid .highcharts-grid-line {
+	display: none;
+}
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:landscape)  {
+	.patch-count {
+			font-size: 24px;
+	}
+	.patch-unit {
+			 padding-top: 10px;
+		}
+}

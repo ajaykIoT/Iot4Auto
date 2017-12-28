@@ -1,0 +1,22 @@
+{
+  "name": "SchedulerEngine",
+  "description": "Engine for scheduled jobs.",
+  "version": "1.0.0",
+  "dependencies": {
+    "async": "1.4.2",
+    "body-parser": "1.13.3",
+	"dotenv": "~2.0.0",
+    "cors": "2.7.1",
+    "cron": "^1.2.1",
+    "express": "4.13.3",
+    "forever": "0.15.1",
+    "request": "2.61.0"
+  },
+  "scripts": {
+    "start": "node Scheduler.js"
+  },
+  "author": {
+    "name": "Nitin Shrivastava",
+    "email": "nitin_shrivastava@persistent.com"
+  }
+}

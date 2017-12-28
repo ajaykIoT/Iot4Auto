@@ -1,0 +1,137 @@
+.yellow {
+	background-color: #FFA800;
+}
+
+.lightgreen{
+	background-color: #c2e678;
+}
+.cursorPointer {
+	cursor: pointer;
+}
+
+.highlightRow {
+	color: white;
+	background-color: #B02A31 !important;
+}
+
+.highlightRow .blue{
+	color: white;	
+}
+
+.table-bordered{
+    font-size: 12px;
+}
+
+.viewtext-color{
+	color: #1093ce;
+}
+.rejected-color {
+	font-weight: bold;
+	color: #ff0000; 
+}
+
+.approve-color{
+	font-weight: bold;
+	color: #12c438; 
+
+}
+
+.deviceth-background{
+	background-color: #585757;
+	color: white;
+	white-space: nowrap;
+}
+
+.textcolor{
+	color: white;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.open_edit_padding{
+	padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+}
+
+
+
+.th-background{
+	background-color: lightgray;
+}
+
+.editpos{
+	left: 5px;
+    position: relative;
+}
+
+.progressBarWidth{
+	/* width:10%; */
+}
+
+.progressBar{
+	width :250px;
+    background: #aaaaaa;
+    border-radius: 20px;
+    /* border: 2px solid red; */
+    height:14px;
+}
+
+.activeProgressBar{
+	background: #0e81b5;
+}
+
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block; 
+    height: 60px;
+    width: 60px;    
+}
+
+.tableWidget{
+	min-height: 300px;
+}
+
+#ngProgress-container {
+    position: relative;
+    /* margin: none;
+    padding: none;
+    top: none;
+    left: none;
+    right: null;
+    z-index: none; */
+    /* width: 21%; */
+    /* height: 0;
+    float: none; */
+}
+
+#ngProgress{
+	border-radius: 20px;
+	box-shadow: none;
+}
+
+.table_opacity{
+    opacity: 0.5;
+    z-index: 0;
+    /* background-color: black; */
+}
+
+.table-widget{
+    min-height: 298px;
+    max-height: 298px;
+    overflow: auto;
+    margin-top: 31px;
+}
+
+.loader-text{
+	font-size: 25px;
+    color: #007cc5;
+    font-weight: bold;
+    z-index: 1;
+    position: absolute;
+    left: 40%;
+    top: 50%;
+}

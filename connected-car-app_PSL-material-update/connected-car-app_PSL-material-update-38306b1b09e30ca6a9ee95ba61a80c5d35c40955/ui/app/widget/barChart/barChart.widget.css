@@ -1,0 +1,9 @@
+#speedAndTurnDetails{
+    height: 300px;
+}
+
+@media only screen and (max-device-width: 768px) {
+    #speedAndTurnDetails{
+        height: 250px !important;
+    }
+}

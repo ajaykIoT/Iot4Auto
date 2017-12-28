@@ -1,0 +1,17 @@
+<article ng-if="patchloaded">
+			<span class="patchBoxLoaderText">Loading..</span>
+</article>
+<section class="{{patchBox.bgColor}} col-md-12 col-sm-12 nopadding" ng-class="{patchBoxOpacity: patchloaded}">
+	
+	<article class="patchimgContainer col-md-3 col-sm-3 imgbg-{{patchBox.bgColor}}">
+		<img class="globe-icon pull-left" src=".../../app/assets/images/patchbox/{{patchBox.imgName}}.png" />
+	</article>
+	<article class="col-md-9 col-sm-9 patch-detail-container">
+		<p class="col-md-12 col-sm-12 patch-heading {{patchBox.txtcolor}}" ng-bind="patchBox.name "></p>
+		<article class="patch_value">
+		<p class="patch-count" ng-bind="patchBox.count | number : fractionSize"></p>
+		<p class="patch-unit" ng-bind="patchBox.unit"></p>
+		</article>
+
+	</article>
+</section>

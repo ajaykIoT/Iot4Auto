@@ -1,0 +1,7 @@
+# Eclipse created files and folders
+.settings
+node_modules
+.cfignore
+jshintrc
+.project
+#config/config.js

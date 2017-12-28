@@ -1,0 +1,34 @@
+.bottomBar {
+	height: 30px !important;
+	width: 92%;
+	left: 7%;
+}
+
+.copyRightText {
+	color: black;
+	font-size: 12px;
+	margin-top: 0px;
+	padding-top: 5px;
+	position: absolute;
+	right:20px;
+}
+
+.footer-container{
+    position: relative;
+	margin-top: 11px;
+}
+
+@media only screen and (max-device-width: 768px) {
+    /*.copyRightText{
+		display: none;
+	}*/
+	.footer-container{
+    	margin-left: 0px;
+	}
+
+	.copyRightText {
+	font-size: 11px;
+	}
+
+
+}

@@ -1,0 +1,709 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API's",
+    "description": "Connected Car API's",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],  
+  "host": "connected-car-api.mybluemix.net",
+  "basePath": "/",
+  "paths": {
+		"/auth/custom": {
+		  "post": {
+			"x-swagger-router-controller": "custom-auth",
+			"operationId": "login",
+			"tags": ["Auth"],
+			"description": "Authenticate the user.",   
+			"parameters": [
+			  {
+				"name": "access_token",
+				"in": "header",
+				"description": "Access token",
+				"required": true,
+				"type": "string"
+			  }
+			],		
+			"responses": {
+			  "default": {
+				"description": "Invalid request.",
+				"schema": {
+				  "$ref": "#/definitions/Error"
+				}
+			  },
+			  "200": {
+				"description": "Successful request.",
+				"schema": {
+				  "type": "array",
+				  "$ref": "#/definitions/Token"
+				}
+			  }
+			}
+		  }
+	  },
+	  "/auth/facebook/token": {
+		  "post": {
+			"x-swagger-router-controller": "social-auth",
+			"operationId": "facebookLogin",
+			"tags": ["Auth"],
+			"description": "Authenticate the user by facebook token.",   
+			"parameters": [
+			  {
+				"name": "access_token",
+				"in": "header",
+				"description": "Access token",
+				"required": true,
+				"type": "string"
+			  }
+			],		
+			"responses": {
+			  "default": {
+				"description": "Invalid request.",
+				"schema": {
+				  "$ref": "#/definitions/Error"
+				}
+			  },
+			  "200": {
+				"description": "Successful request.",
+				"schema": {
+				  "type": "array",
+				  "$ref": "#/definitions/Token"
+				}
+			  }
+			}
+		  }
+	  },
+	  "/auth/google/token": {
+		  "post": {
+			"x-swagger-router-controller": "social-auth",
+			"operationId": "googleLogin",
+			"tags": ["Auth"],
+			"description": "Authenticate the user by google token.",   
+			"parameters": [
+			  {
+				"name": "access_token",
+				"in": "header",
+				"description": "Access token",
+				"required": true,
+				"type": "string"
+			  }
+			],		
+			"responses": {
+			  "default": {
+				"description": "Invalid request.",
+				"schema": {
+				  "$ref": "#/definitions/Error"
+				}
+			  },
+			  "200": {
+				"description": "Successful request.",
+				"schema": {
+				  "type": "array",
+				  "$ref": "#/definitions/Token"
+				}
+			  }
+			}
+		  }
+	  },
+	  "/auth/google/token/id": {
+		  "post": {
+			"x-swagger-router-controller": "social-auth",
+			"operationId": "googleIdLogin",
+			"tags": ["Auth"],
+			"description": "Authenticate the user by google id token.",   
+			"parameters": [
+			  {
+				"name": "access_token",
+				"in": "header",
+				"description": "Access token",
+				"required": true,
+				"type": "string"
+			  }
+			],		
+			"responses": {
+			  "default": {
+				"description": "Invalid request.",
+				"schema": {
+				  "$ref": "#/definitions/Error"
+				}
+			  },
+			  "200": {
+				"description": "Successful request.",
+				"schema": {
+				  "type": "array",
+				  "$ref": "#/definitions/Token"
+				}
+			  }
+			}
+		  }
+	  },
+	  "/api/v1/user/trips": {
+      "get": {
+        "x-swagger-router-controller": "trips",
+        "operationId": "getUserTrips",
+        "tags": ["Trips"],
+        "description": "Returns all trips",   
+		"parameters": [
+          {
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],		
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              
+              "$ref": "#/definitions/Trips"
+            }
+          }
+        }
+      }
+    },
+	  "/api/v1/dashboard": {
+      "get": {
+        "x-swagger-router-controller": "dashboard",
+        "operationId": "getDashboard",
+        "tags": ["Dashboard"],
+        "description": "Returns dashboard info",   
+		"parameters": [
+          {
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],		
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+				"properties": {
+					"data": {
+						"$ref": "#/definitions/Dashboard"
+					}	
+			  }
+            }
+          }
+        }
+      }
+    },
+	  "/api/v1/map/location/last": {
+      "get": {
+        "x-swagger-router-controller": "map",
+        "operationId": "getLastLocation",
+        "tags": ["Map"],
+        "description": "Returns last coordinates",   
+		"parameters": [
+          {
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],		
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+				"properties": {
+					"data": {
+						"$ref": "#/definitions/MapLocationLast"
+					}	
+			  }
+            }
+          }
+        }
+      }
+    },
+	  "/api/v1/driving/score": {
+      "get": {
+        "x-swagger-router-controller": "weeklyscore",
+        "operationId": "getWeeklyDrivingScore",
+        "tags": ["Score"],
+        "description": "Returns date wise Weekly Driving Score with count of driving behavior",   
+		"parameters": [
+          {
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],		
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+				"properties": {
+					"data": {
+						"$ref": "#/definitions/DrivingScores"
+					},
+				"data": {
+						"$ref": "#/definitions/BehaviorCount"
+					}	
+			  }
+            }
+          }
+        }
+      }
+    },
+	"/api/v1/driving/behaviorcount": {
+      "get": {
+        "x-swagger-router-controller": "weeklyscore",
+        "operationId": "getWeeklyDrivingBehaviorCount",
+        "tags": ["Behavior"],
+        "description": "Returns Weekly diffrent Driving Behavior count for a driver",   
+		"parameters": [
+          {
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],		
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+				"properties": {
+					"data": {
+						"$ref": "#/definitions/BehaviorCount"
+					}	
+			  }
+            }
+          }
+        }
+      }
+    },
+	 "/api/v1/car/pair": {
+		  "post": {
+			"x-swagger-router-controller": "car",
+			"operationId": "carpair",
+			"tags": ["Car"],
+			"description": "Pair the car device with user.",   
+			"consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+			"parameters": [
+			  {
+				"name": "access_token",
+				"in": "header",
+				"description": "Access token",
+				"required": true,
+				"type": "string"
+			  },  
+			  {
+				"name": "body",
+                "in": "body",               
+                "description": "car pair needs the info of car",
+                "required": true,
+                "schema": {
+                            "$ref": "#/definitions/carpair"
+                        }
+              }
+			],		
+			"responses": {
+			  "default": {
+				"description": "Invalid request.",
+				"schema": {
+				  "$ref": "#/definitions/Error"
+				}
+			  },
+			  "200": {
+				"description": "Successful request.",
+				"schema": {
+				    "$ref": "#/definitions/Success"
+				}
+			  }
+			}
+		  }
+	  },
+	 "/api/v1/user/tripid": {
+      "get": {
+        "x-swagger-router-controller": "trips",
+        "operationId": "getTripIds",
+        "tags": ["Trips"],
+        "description": "Returns all trip ids",   
+		"parameters": [
+          {
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],		
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              
+              "$ref": "#/definitions/TripIDs"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+	"Token": {
+		"properties": {
+			"token": {
+				"type": "string"
+			},
+			"expires": {
+				"type": "number"
+			},
+			"user": {
+				"$ref": "#/definitions/User" 
+			}
+		}
+	},
+	"TripIDs": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/IDS" 
+          }        
+        }
+      }
+    },
+	"IDS": {
+	  "properties": {
+        "id": {
+          "type": "number"
+        }        
+      }
+    },
+	
+	"Trip-Cordinates": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TripRouteCoordinate" 
+          }        
+        }
+      }
+    },
+	
+	"Trip-Features": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TripFeature" 
+          }        
+        }
+      }
+    },
+	
+	"Users": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/User" 
+          }        
+        }
+      }
+    },
+    "User": {
+	  "properties": {
+        "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    },
+	"IdToken": {
+      "properties": {
+        "access_token": {                   
+           "type": "string"                    
+         }
+      }
+    },
+	"Test": {
+      "properties": {
+        "username": {                   
+           "type": "string"                    
+         },
+         "password": {                   
+           "type":"string"                    
+         }
+         
+      }
+    },
+	"Dashboard": {
+		"properties":{
+			"user_info": {
+				"$ref": "#/definitions/UserInfo"
+			},
+			"driving_scores": {
+				"$ref": "#/definitions/DashboardDrivingScore" 
+			},
+			"last_trip_coordinate": {
+				"$ref": "#/definitions/LastTripCoordinate" 
+			},
+			"wifi_signal_status":{
+				"type": "string"
+			},
+			"car_issues_count":{
+				"type": "integer"
+			}
+		}
+	},
+	
+	"Trips": {
+		"properties":{
+			"coordinates": {
+				"$ref": "#/definitions/Trip-Cordinates"
+			},
+			"trip_features": {
+				"$ref": "#/definitions/Trip-Features" 
+			}
+			
+		}
+	},
+	
+	"DashboardDrivingScore":{
+		"properties":{
+			"total_mileage": {
+				"type": "number"
+			},
+			"total_driving_hours": {
+				"type": "number"
+			},
+			"total_driving_score": {
+				"$ref": "#/definitions/TotalDrivingScore" 
+			}
+		}	
+	},
+	"TotalDrivingScore":{
+		"properties":{
+			"score": {
+				"type": "number"
+			},
+			"score_limit": {
+				"type": "number"
+			}		
+		}	
+	},
+	"LastTripCoordinate":{
+		"properties":{
+			"lat": {
+				"type": "number"
+			},
+			"lng": {
+				"type": "number"
+			}		
+		}
+	},
+	"TripRouteCoordinate":{
+		"properties":{
+			"lat": {
+				"type": "number"
+			},
+			"lng": {
+				"type": "number"
+			},
+			"ts": {
+				"type": "string"
+			},
+			"id": {
+				"type": "number"
+			}
+		}
+	},
+	"UserInfo": {
+		"properties":{
+			"username": {
+				"type": "string"
+			}		
+		}
+	},
+	"MapLocationLast":{
+		"$ref": "#/definitions/LastTripCoordinate" 
+	},
+	"DrivingScores" : {
+		"properties":{
+			"driving_score_data": {
+				"type": "array",
+				"items": {            
+					"$ref": "#/definitions/DrivingScoreData" 
+				} 
+			}			
+		}
+	},
+	"BehaviorCount" : {
+		"properties":{
+			"driving_score_data": {
+				"type": "array",
+				"items": {            
+					"$ref": "#/definitions/BehaviorCountData" 
+				} 
+			}		
+		}
+	},
+	"BehaviorCountData" : {
+		"properties": {
+			"behavior_name": {
+			  "type": "string"
+			},
+			"behavior_count": {
+			  "type": "number"
+			},
+			"username": {
+			  "type": "string"
+			}
+		}
+	},
+	"DrivingScoreData" : {
+		"properties": {
+			"date": {
+			  "type": "string"
+			},
+			
+			"total_score": {
+			  "type": "number"
+			}		
+			
+		}
+	},
+
+	"TripFeature" : {
+		"properties": {
+			"feature_name": {
+			  "type": "string"
+			},
+			"feature_value": {
+			  "type": "number"
+			}
+		}
+	},
+	
+	"DrivingScore" : {
+		"properties": {
+			"harsh_acceleration": {
+			  "type": "number"
+			},
+			"harsh_braking": {
+			  "type": "number"
+			},
+			"speeding": {
+			  "type": "number"
+			},
+			"frequent_stops": {
+			  "type": "number"
+			},
+			"frequent_acceleration": {
+			  "type": "number"
+			},
+			"frequent_braking": {
+			  "type": "number"
+			},
+			"sharp_turn": {
+			  "type": "number"
+			},
+			"acceleration_before_turn": {
+			  "type": "number"
+			},
+			"over_braking_before_exiting_turn": {
+			  "type": "number"
+			},
+			"fatigued_driving": {
+			  "type": "number"
+			}
+		}
+	},
+	 "carpair": {
+            "type": "object",
+            "properties": {
+                
+                "deviceid": {
+                    "type": "string"
+                },
+                "devicetype": {
+                    "type": "string"
+                },
+                "devicetoken": {
+                    "type": "string"
+                },
+                "orgid": {
+                    "type": "string"
+                },
+                "carname": {
+                    "type": "string"
+                }
+            }
+        },
+	"Error": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": ["message"]
+    },
+	"Success": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": ["message"]
+    }
+  }
+}
